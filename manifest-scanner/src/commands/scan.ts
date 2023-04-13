@@ -55,8 +55,11 @@ export default class Scan extends Command {
       console.log(`Found file at: ${filePath}`);
       this.parseXmlFileToJson(filePath)
         .then((result: any) => {
-          console.log(JSON.stringify(result, null, 2));
-          console.log(result.manifest.application);
+          //  console.log(JSON.stringify(result, null, 2));
+          let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
+          let packageName =
+            AndroidManifestXML.manifest.application[0].$["android:allowBackup"];
+          console.log(packageName);
         })
         .catch((error: any) => {});
     } else {
