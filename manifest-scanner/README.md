@@ -1,5 +1,4 @@
-oclif-hello-world
-=================
+# oclif-hello-world
 
 oclif example Hello World CLI
 
@@ -10,14 +9,18 @@ oclif example Hello World CLI
 [![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
-* [Usage](#usage)
-* [Commands](#commands)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g manifest-scanner
 $ manifest-scanner COMMAND
@@ -29,7 +32,9 @@ USAGE
   $ manifest-scanner COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 ```sh-session
 $ npm install -g oclif-hello-world
 $ oex COMMAND
@@ -41,21 +46,25 @@ USAGE
   $ oex COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`manifest-scanner hello PERSON`](#manifest-scanner-hello-person)
-* [`manifest-scanner hello world`](#manifest-scanner-hello-world)
-* [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
-* [`manifest-scanner plugins`](#manifest-scanner-plugins)
-* [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin)
-* [`manifest-scanner plugins:inspect PLUGIN...`](#manifest-scanner-pluginsinspect-plugin)
-* [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin-1)
-* [`manifest-scanner plugins:link PLUGIN`](#manifest-scanner-pluginslink-plugin)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-1)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-2)
-* [`manifest-scanner plugins update`](#manifest-scanner-plugins-update)
+
+- [`manifest-scanner hello PERSON`](#manifest-scanner-hello-person)
+- [`manifest-scanner hello world`](#manifest-scanner-hello-world)
+- [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
+- [`manifest-scanner plugins`](#manifest-scanner-plugins)
+- [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin)
+- [`manifest-scanner plugins:inspect PLUGIN...`](#manifest-scanner-pluginsinspect-plugin)
+- [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin-1)
+- [`manifest-scanner plugins:link PLUGIN`](#manifest-scanner-pluginslink-plugin)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-1)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-2)
+- [`manifest-scanner plugins update`](#manifest-scanner-plugins-update)
 
 ## `manifest-scanner hello PERSON`
 
@@ -168,7 +177,7 @@ ALIASES
   $ manifest-scanner plugins add
 
 EXAMPLES
-  $ manifest-scanner plugins:install myplugin 
+  $ manifest-scanner plugins:install myplugin
 
   $ manifest-scanner plugins:install https://github.com/someuser/someplugin
 
@@ -231,7 +240,7 @@ ALIASES
   $ manifest-scanner plugins add
 
 EXAMPLES
-  $ manifest-scanner plugins:install myplugin 
+  $ manifest-scanner plugins:install myplugin
 
   $ manifest-scanner plugins:install https://github.com/someuser/someplugin
 
@@ -349,16 +358,18 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
 <!-- commandsstop -->
-* [`oex hello PERSON`](#oex-hello-person)
-* [`oex hello world`](#oex-hello-world)
-* [`oex help [COMMAND]`](#oex-help-command)
-* [`oex plugins`](#oex-plugins)
-* [`oex plugins:inspect PLUGIN...`](#oex-pluginsinspect-plugin)
-* [`oex plugins:install PLUGIN...`](#oex-pluginsinstall-plugin)
-* [`oex plugins:link PLUGIN`](#oex-pluginslink-plugin)
-* [`oex plugins:uninstall PLUGIN...`](#oex-pluginsuninstall-plugin)
-* [`oex plugins update`](#oex-plugins-update)
+
+- [`oex hello PERSON`](#oex-hello-person)
+- [`oex hello world`](#oex-hello-world)
+- [`oex help [COMMAND]`](#oex-help-command)
+- [`oex plugins`](#oex-plugins)
+- [`oex plugins:inspect PLUGIN...`](#oex-pluginsinspect-plugin)
+- [`oex plugins:install PLUGIN...`](#oex-pluginsinstall-plugin)
+- [`oex plugins:link PLUGIN`](#oex-pluginslink-plugin)
+- [`oex plugins:uninstall PLUGIN...`](#oex-pluginsuninstall-plugin)
+- [`oex plugins update`](#oex-plugins-update)
 
 ## `oex hello PERSON`
 
@@ -493,7 +504,7 @@ ALIASES
   $ oex plugins add
 
 EXAMPLES
-  $ oex plugins:install myplugin 
+  $ oex plugins:install myplugin
 
   $ oex plugins:install https://github.com/someuser/someplugin
 
@@ -565,4 +576,5 @@ FLAGS
 DESCRIPTION
   Update installed plugins.
 ```
+
 <!-- commandsstop -->
