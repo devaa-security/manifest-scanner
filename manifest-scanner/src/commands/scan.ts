@@ -1,8 +1,6 @@
 import { Args, Command, Flags } from "@oclif/core";
-import { findFileInDirectory, parseXmlFileToJson } from "./utils/fileutils";
-import AllowBackupRule from "./plugins/manifest/AllowBackupRule";
-import AndroidDebuggableRule from "./plugins/manifest/AndroidDebuggableRule";
-import ManifestPlugin from "./plugins/ManifestPlugin";
+import { findFileInDirectory, parseXmlFileToJson } from "../utils/fileutils";
+import ManifestPlugin from "../plugins/ManifestPlugin";
 const fs = require("fs/promises");
 
 export default class Scan extends Command {
@@ -58,7 +56,7 @@ export default class Scan extends Command {
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
           ManifestPlugin.updateManifest(AndroidManifestXML, filePath);
 
-          const folders = ["./src/commands/plugins/manifest"];
+          const folders = ["./src/plugins/manifest"];
 
           (async () => {
             for (const folder of folders) {
@@ -66,7 +64,7 @@ export default class Scan extends Command {
               for (const file of files) {
                 console.log(folder + "/" + file);
                 const { default: Rule } = await import(
-                  "./plugins/manifest/" + file
+                  "../plugins/manifest/" + file
                 );
                 let rule = new Rule();
                 rule.run();
