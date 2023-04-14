@@ -14,14 +14,14 @@ export default class AllowBackupRule extends ManifestPlugin {
 
   run(): void {
     console.log("Running AllowBackupRule");
-    let applicationTag = this.manifestXMLObject.manifest.application;
+    let applicationTag = ManifestPlugin.manifestXMLObject.manifest.application;
     if (applicationTag) {
       let allowBackupAttribute = applicationTag[0].$["android:allowBackup"];
 
       if (allowBackupAttribute) {
         if (allowBackupAttribute === "true") {
           let result = searchKeywordInFile(
-            this.manifestPath,
+            ManifestPlugin.manifestPath,
             "android:allowBackup"
           );
           this.issues.push({
@@ -29,7 +29,7 @@ export default class AllowBackupRule extends ManifestPlugin {
             severity: this.severity,
             description: this.description,
             location: {
-              file: this.manifestPath, // TODO: return only relative path from root
+              file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
               line: result?.line,
               column: result?.column,
             },

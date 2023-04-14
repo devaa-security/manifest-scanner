@@ -18,14 +18,14 @@ automatically by the tools"
 
   run(): void {
     console.log("Running AndroidDebuggableRule");
-    let applicationTag = this.manifestXMLObject.manifest.application;
+    let applicationTag = ManifestPlugin.manifestXMLObject.manifest.application;
     if (applicationTag) {
       let allowBackupAttribute = applicationTag[0].$["android:debuggable"];
 
       if (allowBackupAttribute) {
         if (allowBackupAttribute === "true") {
           let result = searchKeywordInFile(
-            this.manifestPath,
+            ManifestPlugin.manifestPath,
             "android:debuggable"
           );
           this.issues.push({
@@ -33,7 +33,7 @@ automatically by the tools"
             severity: this.severity,
             description: this.description,
             location: {
-              file: this.manifestPath, // TODO: return only relative path from root
+              file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
               line: result?.line,
               column: result?.column,
             },

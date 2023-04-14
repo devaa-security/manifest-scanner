@@ -2,6 +2,7 @@ import { Args, Command, Flags } from "@oclif/core";
 import { findFileInDirectory, parseXmlFileToJson } from "./utils/fileutils";
 import AllowBackupRule from "./plugins/manifest/AllowBackupRule";
 import AndroidDebuggableRule from "./plugins/manifest/AndroidDebuggableRule";
+import ManifestPlugin from "./plugins/ManifestPlugin";
 
 export default class Scan extends Command {
   static description =
@@ -52,14 +53,13 @@ export default class Scan extends Command {
         .then((result: any) => {
           //  console.log(JSON.stringify(result, null, 2));
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
+          ManifestPlugin.updateManifest(AndroidManifestXML, filePath);
           try {
             let allowBackupRule = new AllowBackupRule();
-            allowBackupRule.updateManifest(AndroidManifestXML, filePath);
             allowBackupRule.run();
             console.log(allowBackupRule.issues);
 
             let androidDebuggableRule = new AndroidDebuggableRule();
-            androidDebuggableRule.updateManifest(AndroidManifestXML, filePath);
             androidDebuggableRule.run();
             console.log(androidDebuggableRule.issues);
           } catch (error) {
