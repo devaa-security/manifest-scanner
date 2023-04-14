@@ -8,7 +8,7 @@ export default abstract class BasePlugin {
 
   // add constructor accepting category, severity and description
   constructor(category: string, severity: Severity, description: string) {
-    console.log("BasePlugin constructor")
+    // console.log("BasePlugin constructor")
     this.category = category;
     this.severity = severity;
     this.description = description;
@@ -20,4 +20,4 @@ export default abstract class BasePlugin {
 }
 
 // export both the BaseRule class and the Severity enum
-export { BasePlugin };  
+export { BasePlugin };

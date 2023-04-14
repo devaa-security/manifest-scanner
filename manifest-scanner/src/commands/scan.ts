@@ -4,10 +4,10 @@ const path = require("path");
 import * as xml2js from "xml2js";
 const util = require("util");
 import AllowBackupRule from "./plugins/manifest/AllowBackupRule";
-import { Severity } from "./plugins/util";
 
 export default class Scan extends Command {
-  static description = "describe the command here";
+  static description =
+    "DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file";
 
   static examples = ["<%= config.bin %> <%= command.id %>"];
 
@@ -59,19 +59,16 @@ export default class Scan extends Command {
         .then((result: any) => {
           //  console.log(JSON.stringify(result, null, 2));
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
-          let packageName =
-            AndroidManifestXML.manifest.application[0].$["android:allowBackup"];
-
           try {
-            let allowBackupRule = new AllowBackupRule(  "Manifest", Severity.WARNING, "AllowBackupRule");
+            let allowBackupRule = new AllowBackupRule();
+            allowBackupRule.updateManifest(AndroidManifestXML, filePath);
             allowBackupRule.run();
-            console.log(allowBackupRule.description)
+            console.log(allowBackupRule.issues);
           } catch (error) {
             console.error(error);
           }
-
         })
-        .catch((error: any) => { });
+        .catch((error: any) => {});
     } else {
       this.error(
         "AndroidManifest.xml not found. Please provide a valid path to the Android Project"
