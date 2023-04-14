@@ -3,10 +3,13 @@ import { findFileInDirectory, parseXmlFileToJson } from "./utils/fileutils";
 import AllowBackupRule from "./plugins/manifest/AllowBackupRule";
 import AndroidDebuggableRule from "./plugins/manifest/AndroidDebuggableRule";
 import ManifestPlugin from "./plugins/ManifestPlugin";
+const fs = require("fs/promises");
 
 export default class Scan extends Command {
   static description =
     "DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file";
+
+  issues = [];
 
   static flags = {
     // flag with a value (-f, --file=VALUE)
@@ -54,19 +57,46 @@ export default class Scan extends Command {
           //  console.log(JSON.stringify(result, null, 2));
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
           ManifestPlugin.updateManifest(AndroidManifestXML, filePath);
-          try {
-            let allowBackupRule = new AllowBackupRule();
-            allowBackupRule.run();
-            console.log(allowBackupRule.issues);
 
-            let androidDebuggableRule = new AndroidDebuggableRule();
-            androidDebuggableRule.run();
-            console.log(androidDebuggableRule.issues);
-          } catch (error) {
-            console.error(error);
-          }
+          const folders = ["./src/commands/plugins/manifest"];
+
+          (async () => {
+            for (const folder of folders) {
+              const files = await fs.readdir(folder);
+              for (const file of files) {
+                console.log(folder + "/" + file);
+                const { default: Rule } = await import(
+                  "./plugins/manifest/" + file
+                );
+                let rule = new Rule();
+                rule.run();
+                // console.log(rule.issues);
+                this.issues = this.issues.concat(rule.issues);
+              }
+            }
+          })()
+            .then(() => {
+              console.log(this.issues);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+          // try {
+          //   let allowBackupRule = new AllowBackupRule();
+          //   allowBackupRule.run();
+          //   console.log(allowBackupRule.issues);
+
+          //   let androidDebuggableRule = new AndroidDebuggableRule();
+          //   androidDebuggableRule.run();
+          //   console.log(androidDebuggableRule.issues);
+          // } catch (error) {
+          //   console.error(error);
+          // }
         })
-        .catch((error: any) => {});
+        .catch((error: any) => {
+          console.error(error);
+        });
     } else {
       this.error(
         "AndroidManifest.xml not found. Please provide a valid path to the Android Project"
