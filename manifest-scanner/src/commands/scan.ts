@@ -3,6 +3,8 @@ const fs = require("fs");
 const path = require("path");
 import * as xml2js from "xml2js";
 const util = require("util");
+import AllowBackupRule from "./plugins/manifest/AllowBackupRule";
+import { Severity } from "./plugins/util";
 
 export default class Scan extends Command {
   static description = "describe the command here";
@@ -59,9 +61,17 @@ export default class Scan extends Command {
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
           let packageName =
             AndroidManifestXML.manifest.application[0].$["android:allowBackup"];
-          console.log(packageName);
+
+          try {
+            let allowBackupRule = new AllowBackupRule(  "Manifest", Severity.WARNING, "AllowBackupRule");
+            allowBackupRule.run();
+            console.log(allowBackupRule.description)
+          } catch (error) {
+            console.error(error);
+          }
+
         })
-        .catch((error: any) => {});
+        .catch((error: any) => { });
     } else {
       this.error(
         "AndroidManifest.xml not found. Please provide a valid path to the Android Project"
