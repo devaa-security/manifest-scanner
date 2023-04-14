@@ -13,7 +13,7 @@ export default class AllowBackupRule extends ManifestPlugin {
   }
 
   run(): void {
-    console.log("Running AllowBackupRule");
+    console.log("✅ Running AllowBackupRule");
     let applicationTag = ManifestPlugin.manifestXMLObject.manifest.application;
     if (applicationTag) {
       let allowBackupAttribute = applicationTag[0].$["android:allowBackup"];

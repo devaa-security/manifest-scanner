@@ -17,7 +17,7 @@ automatically by the tools"
   }
 
   run(): void {
-    console.log("Running AndroidDebuggableRule");
+    console.log("✅ Running AndroidDebuggableRule");
     let applicationTag = ManifestPlugin.manifestXMLObject.manifest.application;
     if (applicationTag) {
       let allowBackupAttribute = applicationTag[0].$["android:debuggable"];
