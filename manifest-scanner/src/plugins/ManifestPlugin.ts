@@ -21,7 +21,7 @@ export default abstract class ManifestPlugin extends BasePlugin {
 
     try {
       this.minSdk = 21;
-      this.targetSdk = 31;
+      this.targetSdk = 20;
     } catch (e) {
       // manifest path is not set, assume minSdk and targetSdk
       this.minSdk = this.targetSdk = 1;

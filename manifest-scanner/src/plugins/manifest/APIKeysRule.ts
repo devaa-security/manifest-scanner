@@ -6,10 +6,10 @@ import * as fs from "fs";
 export default class APIKeysRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
 
-  API_KEY_REGEX = '(?=.{20,})(?=.+\d)(?=.+[a-z])(?=.+[A-Z])'
-  SPECIAL_CHARACTER_REGEX = '(?=.+[!$%^~])'
-  HARDCODED_API_KEY_REGEX = 'api_key|api|key'
-  META_DATA_REGEX = '<meta-data'
+  API_KEY_REGEX = "(?=.{20,})(?=.+d)(?=.+[a-z])(?=.+[A-Z])";
+  SPECIAL_CHARACTER_REGEX = "(?=.+[!$%^~])";
+  HARDCODED_API_KEY_REGEX = "api_key|api|key";
+  META_DATA_REGEX = "<meta-data";
 
   constructor() {
     super(
@@ -26,20 +26,24 @@ export default class APIKeysRule extends ManifestPlugin {
     let lines = manifestFile.split("\n");
     let lineNum = 1;
     for (let line of lines) {
-        // check if line contains API key regex
-        // TODO: Improve check by parsing meta-data and calculate entropy
-        if (line.indexOf(this.META_DATA_REGEX) > 0 && (line.match(this.HARDCODED_API_KEY_REGEX) || line.match(this.API_KEY_REGEX))) {
-            this.issues.push({
-                category: this.category,
-                severity: this.severity,
-                description: this.description,
-                location: {
-                    file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-                    line: lineNum,
-                },
-            });
-        }
-        lineNum++;
+      // check if line contains API key regex
+      // TODO: Improve check by parsing meta-data and calculate entropy
+      if (
+        line.indexOf(this.META_DATA_REGEX) > 0 &&
+        (line.match(this.HARDCODED_API_KEY_REGEX) ||
+          line.match(this.API_KEY_REGEX))
+      ) {
+        this.issues.push({
+          category: this.category,
+          severity: this.severity,
+          description: this.description,
+          location: {
+            file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
+            line: lineNum,
+          },
+        });
+      }
+      lineNum++;
     }
   }
 }

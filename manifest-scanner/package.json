@@ -68,7 +68,16 @@
   },
   "bugs": "https://github.com/devaa-security/manifest-scanner/issues",
   "keywords": [
-    "android", "android-security", "qark", "manifest-scanner", "manifest", "security", "android-manifest", "android-manifest-scanner", "android-manifest-security", "android-manifest-scanner-security"
+    "android",
+    "android-security",
+    "qark",
+    "manifest-scanner",
+    "manifest",
+    "security",
+    "android-manifest",
+    "android-manifest-scanner",
+    "android-manifest-security",
+    "android-manifest-scanner-security"
   ],
   "types": "dist/index.d.ts"
 }

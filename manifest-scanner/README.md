@@ -9,14 +9,16 @@ oclif example Hello World CLI
 [![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/oclif/hello-world/blob/main/package.json)
 
 <!-- toc -->
-* [oclif-hello-world](#oclif-hello-world)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [oclif-hello-world](#oclif-hello-world)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g manifest-scanner
 $ manifest-scanner COMMAND
@@ -28,22 +30,24 @@ USAGE
   $ manifest-scanner COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-* [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
-* [`manifest-scanner plugins`](#manifest-scanner-plugins)
-* [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin)
-* [`manifest-scanner plugins:inspect PLUGIN...`](#manifest-scanner-pluginsinspect-plugin)
-* [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin-1)
-* [`manifest-scanner plugins:link PLUGIN`](#manifest-scanner-pluginslink-plugin)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-1)
-* [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-2)
-* [`manifest-scanner plugins update`](#manifest-scanner-plugins-update)
-* [`manifest-scanner scan`](#manifest-scanner-scan)
+
+- [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
+- [`manifest-scanner plugins`](#manifest-scanner-plugins)
+- [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin)
+- [`manifest-scanner plugins:inspect PLUGIN...`](#manifest-scanner-pluginsinspect-plugin)
+- [`manifest-scanner plugins:install PLUGIN...`](#manifest-scanner-pluginsinstall-plugin-1)
+- [`manifest-scanner plugins:link PLUGIN`](#manifest-scanner-pluginslink-plugin)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-1)
+- [`manifest-scanner plugins:uninstall PLUGIN...`](#manifest-scanner-pluginsuninstall-plugin-2)
+- [`manifest-scanner plugins update`](#manifest-scanner-plugins-update)
+- [`manifest-scanner scan`](#manifest-scanner-scan)
 
 ## `manifest-scanner help [COMMANDS]`
 
@@ -116,7 +120,7 @@ ALIASES
   $ manifest-scanner plugins add
 
 EXAMPLES
-  $ manifest-scanner plugins:install myplugin 
+  $ manifest-scanner plugins:install myplugin
 
   $ manifest-scanner plugins:install https://github.com/someuser/someplugin
 
@@ -179,7 +183,7 @@ ALIASES
   $ manifest-scanner plugins add
 
 EXAMPLES
-  $ manifest-scanner plugins:install myplugin 
+  $ manifest-scanner plugins:install myplugin
 
   $ manifest-scanner plugins:install https://github.com/someuser/someplugin
 
@@ -315,4 +319,5 @@ DESCRIPTION
 ```
 
 _See code: [dist/commands/scan.ts](https://github.com/devaa-security/manifest-scanner/blob/v1.0.0/dist/commands/scan.ts)_
+
 <!-- commandsstop -->
