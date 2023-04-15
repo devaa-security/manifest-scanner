@@ -20,15 +20,17 @@ export default abstract class ManifestPlugin extends BasePlugin {
     this.manifestPath = ManifestPath;
 
     try {
-      this.minSdk = 21;
-      this.targetSdk = 20;
+      this.minSdk =
+        manifestXMLObject.manifest.usesSdk[0].$["android:minSdkVersion"];
+      this.targetSdk =
+        manifestXMLObject.manifest.usesSdk[0].$["android:targetSdkVersion"];
     } catch (e) {
       // manifest path is not set, assume minSdk and targetSdk
       this.minSdk = this.targetSdk = 1;
     }
 
     try {
-      this.packageName = "com.example.devaa";
+      this.packageName = manifestXMLObject.manifest.$.package;
     } catch (e) {
       this.packageName = "PACKAGE_NOT_FOUND";
     }

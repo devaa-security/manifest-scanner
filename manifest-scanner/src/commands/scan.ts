@@ -62,7 +62,7 @@ export default class Scan extends Command {
             for (const folder of folders) {
               const files = await fs.readdir(folder);
               for (const file of files) {
-                console.log(folder + "/" + file);
+                //    console.log(folder + "/" + file);
                 const { default: Rule } = await import(
                   "../plugins/manifest/" + file
                 );
