@@ -28,7 +28,6 @@ USAGE
   $ manifest-scanner COMMAND
 ...
 ```
-<!-- usagestop -->
 
 # Commands
 
