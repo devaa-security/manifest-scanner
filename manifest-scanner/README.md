@@ -10,11 +10,17 @@ Android Manifest Scanner CLI - DEVAA Security
 
 # Usage
 
-<!-- usage -->
 ```sh-session
 $ npm install -g manifest-scanner
-$ manifest-scanner COMMAND
-running command...
+$ manifest-scanner scan --file <ANDROID_PROJECT_DIRECTORY> --report json --output <OUTPUT_FILE>
+✅ Running AllowBackupRule
+✅ Running AndroidDebuggableRule
+✅ Running APIKeysRule
+✅ Running Custom Permission Check Rule
+✅ Running Exported Component Rule
+✅ Running SingleTaskLaunchMode Rule
+✅ Running Task ReParenting Rule
+...
 $ manifest-scanner (--version)
 manifest-scanner/1.0.1 win32-x64 node-v18.15.0
 $ manifest-scanner --help [COMMAND]
