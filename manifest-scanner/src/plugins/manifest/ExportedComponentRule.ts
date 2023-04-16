@@ -1,5 +1,5 @@
 import { BaseJavaCstVisitorWithDefaults } from "java-parser";
-import ManifestPlugin from "../ManifestPlugin";
+import { ManifestPlugin } from "../ManifestPlugin";
 import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 import { getJavaFiles } from "../../utils/fileutils";
 const { parse } = require("java-parser");

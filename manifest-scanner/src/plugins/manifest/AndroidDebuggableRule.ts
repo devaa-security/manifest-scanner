@@ -1,4 +1,4 @@
-import ManifestPlugin from "../ManifestPlugin";
+import { ManifestPlugin } from "../ManifestPlugin";
 import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 
 // write a rule to check if the allowBackup attribute is set to true or false inside class AndroidDebuggable extended from BaseRule implemeting run method

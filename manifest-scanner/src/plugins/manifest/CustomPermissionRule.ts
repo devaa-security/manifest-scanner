@@ -1,4 +1,4 @@
-import ManifestPlugin from "../ManifestPlugin";
+import { ManifestPlugin } from "../ManifestPlugin";
 import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 
 // write a rule to check if the custom permission tag is available

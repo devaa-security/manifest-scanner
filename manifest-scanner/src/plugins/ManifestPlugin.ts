@@ -44,3 +44,5 @@ export default abstract class ManifestPlugin extends BasePlugin {
 
   abstract run(): void; // User should define how their plugin runs
 }
+
+export { ManifestPlugin };

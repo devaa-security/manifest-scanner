@@ -1,6 +1,6 @@
 import { Args, Command, Flags } from "@oclif/core";
 import { findFileInDirectory, parseXmlFileToJson } from "../utils/fileutils";
-import ManifestPlugin from "../plugins/ManifestPlugin";
+import { ManifestPlugin } from "../plugins/ManifestPlugin";
 import path = require("path");
 const fs = require("fs/promises");
 
@@ -72,7 +72,8 @@ export default class Scan extends Command {
               const files = await fs.readdir(folder);
               for (const file of files) {
                 //    console.log(folder + "/" + file);
-                let filePath = path.join(__dirname, "..", 'plugins', 'manifest', file);
+                let fileWithoutExtension = file.split(".")[0];
+                let filePath = path.join(__dirname, "..", 'plugins', 'manifest', fileWithoutExtension);
                 const { default: Rule } = await import(
                   filePath
                 );

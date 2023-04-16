@@ -1,4 +1,4 @@
-import ManifestPlugin from "../ManifestPlugin";
+import { ManifestPlugin } from "../ManifestPlugin";
 import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 import * as fs from "fs";
 
