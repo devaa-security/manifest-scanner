@@ -1,34 +1,34 @@
 import ManifestPlugin from "../ManifestPlugin";
 import { Severity, searchKeywordInFile } from "../util";
 
-export default class SingleTaskLaunchModeRule extends ManifestPlugin {
+export default class TaskReParentingRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
 
-  static TASK_LAUNCH_MODE_DESCRIPTION = `This results in AMS either resuming the earlier activity or loads it in a task with same affinity
-or the activity is started as a new task. This may result in Task Poisoning.
+  static TASK_REPARENTING_DESCRIPTION = `This allows an existing activity to be reparented to a new native task i.e task having the same affinity as the
+activity. This may lead to UI spoofing attack on this application.
 https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-chuangang.pdf`;
 
   constructor() {
     super(
       "Manifest",
       Severity.WARNING,
-      SingleTaskLaunchModeRule.TASK_LAUNCH_MODE_DESCRIPTION
+      TaskReParentingRule.TASK_REPARENTING_DESCRIPTION
     );
   }
 
   run(): void {
-    console.log("✅ Running SingleTaskLaunchMode Rule");
+    console.log("✅ Running Task ReParenting Rule");
     let activityTag =
       ManifestPlugin.manifestXMLObject.manifest.application[0].activity;
     if (activityTag) {
       activityTag.forEach((activity: any) => {
-        let launchMode = activity.$["android:launchMode"];
+        let launchMode = activity.$["android:allowTaskReparenting"];
 
         if (launchMode) {
-          if (launchMode === "singleTask") {
+          if (launchMode === "true") {
             let result = searchKeywordInFile(
               ManifestPlugin.manifestPath,
-              "android:launchMode"
+              "android:allowTaskReparenting"
             );
             this.issues.push({
               category: this.category,
