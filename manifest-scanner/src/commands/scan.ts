@@ -18,7 +18,11 @@ export default class Scan extends Command {
     // flag with no value (-r, --report)
     report: Flags.string({
       char: "r",
-      description: "Report format (json, text)",
+      description: "Report format (json)",
+    }),
+    output: Flags.string({
+      char: "o",
+      description: "Output File Path",
     }),
   };
 
@@ -79,22 +83,20 @@ export default class Scan extends Command {
           })()
             .then(() => {
               console.log(this.issues);
+              if (flags.output) {
+                fs.writeFile(
+                  flags.output,
+                  JSON.stringify(this.issues, null, 2),
+                  function (err: any) {
+                    if (err) throw err;
+                    console.log("Saved!");
+                  }
+                );
+              }
             })
             .catch((error) => {
               console.error(error);
             });
-
-          // try {
-          //   let allowBackupRule = new AllowBackupRule();
-          //   allowBackupRule.run();
-          //   console.log(allowBackupRule.issues);
-
-          //   let androidDebuggableRule = new AndroidDebuggableRule();
-          //   androidDebuggableRule.run();
-          //   console.log(androidDebuggableRule.issues);
-          // } catch (error) {
-          //   console.error(error);
-          // }
         })
         .catch((error: any) => {
           console.error(error);
