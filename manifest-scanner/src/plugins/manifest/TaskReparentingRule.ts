@@ -36,9 +36,9 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
               name: "Task ReParenting Check",
               description: this.description,
               file: getRelativePath(
-                  ManifestPlugin.androidProjectDirectory,
-                  ManifestPlugin.manifestPath
-                ), // TODO: return only relative path from root
+                ManifestPlugin.androidProjectDirectory,
+                ManifestPlugin.manifestPath
+              ), // TODO: return only relative path from root
               line: result?.line,
               column: result?.column,
             });
