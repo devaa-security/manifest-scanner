@@ -22,7 +22,7 @@ $ npm install -g manifest-scanner
 $ manifest-scanner COMMAND
 running command...
 $ manifest-scanner (--version)
-manifest-scanner/1.0.0 win32-x64 node-v18.15.0
+manifest-scanner/1.0.1 win32-x64 node-v18.15.0
 $ manifest-scanner --help [COMMAND]
 USAGE
   $ manifest-scanner COMMAND
@@ -315,5 +315,5 @@ DESCRIPTION
   DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file
 ```
 
-_See code: [dist/commands/scan.ts](https://github.com/devaa-security/manifest-scanner/blob/v1.0.0/dist/commands/scan.ts)_
+_See code: [dist/commands/scan.ts](https://github.com/devaa-security/manifest-scanner/blob/v1.0.1/dist/commands/scan.ts)_
 <!-- commandsstop -->

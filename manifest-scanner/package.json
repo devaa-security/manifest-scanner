@@ -1,6 +1,6 @@
 {
   "name": "manifest-scanner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manifest Scanner for Android Application",
   "author": "Shivasurya @s5dev",
   "bin": {
