@@ -301,6 +301,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         this.issues.push({
           category: "Manifest",
           severity: Severity.INFO,
+          name: "Exported Components Check",
           description: this.EXPORTED_AND_PERMISSION_TAG,
           file: ManifestPlugin.manifestPath,
           line: result?.line,
@@ -315,6 +316,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         this.issues.push({
           category: "Manifest",
           severity: Severity.WARNING,
+          name: "Exported Components Check",
           description: this.EXPORTED,
           file: ManifestPlugin.manifestPath,
           line: result?.line,
@@ -339,6 +341,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   category: "Manifest",
                   severity: Severity.INFO,
                   description: this.EXPORTED_IN_PROTECTED,
+                  name: "Exported Components Check",
                   file: ManifestPlugin.manifestPath,
                   line: result?.line,
                   column: result?.column,
@@ -348,6 +351,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   category: "Manifest",
                   severity: Severity.INFO,
                   description: this.EXPORTED_AND_PERMISSION_TAG,
+                  name: "Exported Components Check",
                   file: ManifestPlugin.manifestPath,
                   line: result?.line,
                   column: result?.column,
@@ -358,6 +362,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   severity: Severity.WARNING,
                   description: this.EXPORTED,
                   file: ManifestPlugin.manifestPath,
+                  name: "Exported Components Check",
                   line: result?.line,
                   column: result?.column,
                 });

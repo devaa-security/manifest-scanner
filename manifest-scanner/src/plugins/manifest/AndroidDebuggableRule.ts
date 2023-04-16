@@ -30,6 +30,7 @@ automatically by the tools"
           );
           this.issues.push({
             category: this.category,
+            name: "Android Debuggable Check",
             severity: this.severity,
             description: this.description,
             location: {

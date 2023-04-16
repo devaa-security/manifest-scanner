@@ -33,6 +33,7 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
             this.issues.push({
               category: this.category,
               severity: this.severity,
+              name: "Single Task Launch Mode Check",
               description: this.description,
               location: {
                 file: ManifestPlugin.manifestPath, // TODO: return only relative path from root

@@ -46,6 +46,7 @@ device that can negatively impact the user.";
               this.issues.push({
                 category: this.category,
                 severity: Severity.INFO,
+                name: "Custom Permission Check",
                 description: this.DANGEROUS_PERMISSION_DESCRIPTION,
                 location: {
                   file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
@@ -62,6 +63,7 @@ device that can negatively impact the user.";
               if (ManifestPlugin.targetSdk < 21) {
                 this.issues.push({
                   category: this.category,
+                  name: "Custom Permission Check",
                   severity: this.severity,
                   description:
                     this.SIGNATURE_OR_SIGNATURE_OR_SYSTEM_DESCRIPTION,

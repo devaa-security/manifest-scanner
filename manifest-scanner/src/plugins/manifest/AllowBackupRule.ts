@@ -26,6 +26,7 @@ export default class AllowBackupRule extends ManifestPlugin {
           );
           this.issues.push({
             category: this.category,
+            name: "Allow Backup Check",
             severity: this.severity,
             description: this.description,
             location: {

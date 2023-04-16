@@ -35,6 +35,7 @@ export default class APIKeysRule extends ManifestPlugin {
       ) {
         this.issues.push({
           category: this.category,
+          name: "API Keys Check",
           severity: this.severity,
           description: this.description,
           location: {
