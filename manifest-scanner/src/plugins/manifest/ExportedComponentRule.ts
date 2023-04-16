@@ -1,6 +1,6 @@
 import { BaseJavaCstVisitorWithDefaults } from "java-parser";
 import ManifestPlugin from "../ManifestPlugin";
-import { Severity, searchKeywordInFile } from "../util";
+import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 import { getJavaFiles } from "../../utils/fileutils";
 const { parse } = require("java-parser");
 import * as fs from "fs";
@@ -303,7 +303,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
           severity: Severity.INFO,
           name: "Exported Components Check",
           description: this.EXPORTED_AND_PERMISSION_TAG,
-          file: ManifestPlugin.manifestPath,
+          file: getRelativePath(
+            ManifestPlugin.androidProjectDirectory,
+            ManifestPlugin.manifestPath
+          ),
           line: result?.line,
           column: result?.column,
         });
@@ -318,7 +321,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
           severity: Severity.WARNING,
           name: "Exported Components Check",
           description: this.EXPORTED,
-          file: ManifestPlugin.manifestPath,
+          file: getRelativePath(
+            ManifestPlugin.androidProjectDirectory,
+            ManifestPlugin.manifestPath
+          ),
           line: result?.line,
           column: result?.column,
         });
@@ -342,7 +348,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   severity: Severity.INFO,
                   description: this.EXPORTED_IN_PROTECTED,
                   name: "Exported Components Check",
-                  file: ManifestPlugin.manifestPath,
+                  file: getRelativePath(
+                    ManifestPlugin.androidProjectDirectory,
+                    ManifestPlugin.manifestPath
+                  ),
                   line: result?.line,
                   column: result?.column,
                 });
@@ -352,7 +361,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   severity: Severity.INFO,
                   description: this.EXPORTED_AND_PERMISSION_TAG,
                   name: "Exported Components Check",
-                  file: ManifestPlugin.manifestPath,
+                  file: getRelativePath(
+                    ManifestPlugin.androidProjectDirectory,
+                    ManifestPlugin.manifestPath
+                  ),
                   line: result?.line,
                   column: result?.column,
                 });
@@ -361,7 +373,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   category: "Manifest",
                   severity: Severity.WARNING,
                   description: this.EXPORTED,
-                  file: ManifestPlugin.manifestPath,
+                  file: getRelativePath(
+                    ManifestPlugin.androidProjectDirectory,
+                    ManifestPlugin.manifestPath
+                  ),
                   name: "Exported Components Check",
                   line: result?.line,
                   column: result?.column,

@@ -63,8 +63,8 @@ export default class Scan extends Command {
             filePath,
             flags.file
           );
-
-          const folders = ["./src/plugins/manifest"];
+          // TODO: Fix hardcoded path
+          const folders = ["D:/source/manifest-scanner/manifest-scanner/src/plugins/manifest"];
 
           (async () => {
             for (const folder of folders) {

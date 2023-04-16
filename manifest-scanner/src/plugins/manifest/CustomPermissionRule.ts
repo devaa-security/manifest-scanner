@@ -1,5 +1,5 @@
 import ManifestPlugin from "../ManifestPlugin";
-import { Severity, searchKeywordInFile } from "../util";
+import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 
 // write a rule to check if the custom permission tag is available
 export default class CustomPermissionRule extends ManifestPlugin {
@@ -48,11 +48,12 @@ device that can negatively impact the user.";
                 severity: Severity.INFO,
                 name: "Custom Permission Check",
                 description: this.DANGEROUS_PERMISSION_DESCRIPTION,
-                location: {
-                  file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-                  line: result?.line,
-                  column: result?.column,
-                },
+                file: getRelativePath(
+                  ManifestPlugin.androidProjectDirectory,
+                  ManifestPlugin.manifestPath
+                ), // TODO: return only relative path from root
+                line: result?.line,
+                column: result?.column,
               });
             }
             // else if protection level is signature or signatureOrSystem  add to issues
@@ -67,11 +68,12 @@ device that can negatively impact the user.";
                   severity: this.severity,
                   description:
                     this.SIGNATURE_OR_SIGNATURE_OR_SYSTEM_DESCRIPTION,
-                  location: {
-                    file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-                    line: result?.line,
-                    column: result?.column,
-                  },
+                  file: getRelativePath(
+                    ManifestPlugin.androidProjectDirectory,
+                    ManifestPlugin.manifestPath
+                  ), // TODO: return only relative path from root
+                  line: result?.line,
+                  column: result?.column,
                 });
               }
             }

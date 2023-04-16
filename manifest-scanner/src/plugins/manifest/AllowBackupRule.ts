@@ -1,5 +1,5 @@
 import ManifestPlugin from "../ManifestPlugin";
-import { Severity, searchKeywordInFile } from "../util";
+import { Severity, searchKeywordInFile, getRelativePath } from "../util";
 
 // write a rule to check if the allowBackup attribute is set to true or false inside class AllowBackupRule extended from BaseRule implemeting run method
 export default class AllowBackupRule extends ManifestPlugin {
@@ -29,11 +29,12 @@ export default class AllowBackupRule extends ManifestPlugin {
             name: "Allow Backup Check",
             severity: this.severity,
             description: this.description,
-            location: {
-              file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-              line: result?.line,
-              column: result?.column,
-            },
+            file: getRelativePath(
+              ManifestPlugin.androidProjectDirectory,
+              ManifestPlugin.manifestPath
+            ),
+            line: result?.line,
+            column: result?.column,
           });
         }
       }

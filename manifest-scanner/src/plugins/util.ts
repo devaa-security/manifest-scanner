@@ -1,10 +1,19 @@
 import * as fs from "fs";
+import * as path from "path";
 
 export enum Severity {
   INFO,
   WARNING,
   ERROR,
   VULNERABILITY,
+}
+
+export function getRelativePath(
+  directory: string,
+  absolutePath: string
+): string {
+  let result = path.normalize(path.relative(directory, absolutePath));
+  return result.replace(/\\/g, "/");
 }
 
 export function searchKeywordInFile(

@@ -1,5 +1,5 @@
 import ManifestPlugin from "../ManifestPlugin";
-import { Severity, searchKeywordInFile } from "../util";
+import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 
 export default class TaskReParentingRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
@@ -35,11 +35,12 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
               severity: this.severity,
               name: "Task ReParenting Check",
               description: this.description,
-              location: {
-                file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-                line: result?.line,
-                column: result?.column,
-              },
+              file: getRelativePath(
+                  ManifestPlugin.androidProjectDirectory,
+                  ManifestPlugin.manifestPath
+                ), // TODO: return only relative path from root
+              line: result?.line,
+              column: result?.column,
             });
           }
         }

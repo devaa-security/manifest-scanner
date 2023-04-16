@@ -1,5 +1,5 @@
 import ManifestPlugin from "../ManifestPlugin";
-import { Severity, searchKeywordInFile } from "../util";
+import { Severity, getRelativePath, searchKeywordInFile } from "../util";
 import * as fs from "fs";
 
 // write a rule to check if the allowBackup attribute is set to true or false inside class AllowBackupRule extended from BaseRule implemeting run method
@@ -38,10 +38,12 @@ export default class APIKeysRule extends ManifestPlugin {
           name: "API Keys Check",
           severity: this.severity,
           description: this.description,
-          location: {
-            file: ManifestPlugin.manifestPath, // TODO: return only relative path from root
-            line: lineNum,
-          },
+          file: getRelativePath(
+            ManifestPlugin.androidProjectDirectory,
+            ManifestPlugin.manifestPath
+          ), // TODO: return only relative path from root
+          line: lineNum,
+          column: 0, // TODO: Fix this
         });
       }
       lineNum++;
