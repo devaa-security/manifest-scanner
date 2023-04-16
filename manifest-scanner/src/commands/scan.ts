@@ -1,6 +1,7 @@
 import { Args, Command, Flags } from "@oclif/core";
 import { findFileInDirectory, parseXmlFileToJson } from "../utils/fileutils";
 import ManifestPlugin from "../plugins/ManifestPlugin";
+import path = require("path");
 const fs = require("fs/promises");
 
 export default class Scan extends Command {
@@ -63,16 +64,17 @@ export default class Scan extends Command {
             filePath,
             flags.file
           );
-          // TODO: Fix hardcoded path
-          const folders = ["./src/plugins/manifest"];
+          
+          const folders = [path.join(__dirname, '..', 'plugins', 'manifest')];
 
           (async () => {
             for (const folder of folders) {
               const files = await fs.readdir(folder);
               for (const file of files) {
                 //    console.log(folder + "/" + file);
+                let filePath = path.join(__dirname, "..", 'plugins', 'manifest', file);
                 const { default: Rule } = await import(
-                  "../plugins/manifest/" + file
+                  filePath
                 );
                 let rule = new Rule();
                 rule.run();
