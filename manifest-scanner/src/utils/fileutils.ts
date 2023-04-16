@@ -35,3 +35,17 @@ export async function parseXmlFileToJson(filePath: string): Promise<any> {
     return null;
   }
 }
+
+export function getJavaFiles(dir: string): string[] {
+  let javaFiles: string[] = [];
+  const files = fs.readdirSync(dir);
+  for (const file of files) {
+    const filePath = path.join(dir, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      javaFiles = javaFiles.concat(getJavaFiles(filePath));
+    } else if (path.extname(file) === ".java") {
+      javaFiles.push(filePath);
+    }
+  }
+  return javaFiles;
+}

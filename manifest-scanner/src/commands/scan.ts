@@ -54,7 +54,11 @@ export default class Scan extends Command {
         .then((result: any) => {
           //  console.log(JSON.stringify(result, null, 2));
           let AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2));
-          ManifestPlugin.updateManifest(AndroidManifestXML, filePath);
+          ManifestPlugin.updateManifest(
+            AndroidManifestXML,
+            filePath,
+            flags.file
+          );
 
           const folders = ["./src/plugins/manifest"];
 

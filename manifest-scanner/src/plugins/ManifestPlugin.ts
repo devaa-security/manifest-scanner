@@ -7,6 +7,7 @@ export default abstract class ManifestPlugin extends BasePlugin {
   static minSdk: number = -1;
   static targetSdk: number = -1;
   static packageName: string = "PACKAGE_NOT_FOUND";
+  static androidProjectDirectory: string = "";
 
   // add constructor accepting category, severity and description
   constructor(category: string, severity: Severity, description: string) {
@@ -14,10 +15,15 @@ export default abstract class ManifestPlugin extends BasePlugin {
     super(category, severity, description);
   }
 
-  static updateManifest(manifestXMLObject: any, ManifestPath: string) {
+  static updateManifest(
+    manifestXMLObject: any,
+    ManifestPath: string,
+    projectDirectory: any
+  ) {
     // Users of this class should call this method instead of changing class attributes directly
     this.manifestXMLObject = manifestXMLObject;
     this.manifestPath = ManifestPath;
+    this.androidProjectDirectory = projectDirectory;
 
     try {
       this.minSdk =

@@ -19,6 +19,7 @@ DESCRIPTION
 ```
 
 _See code: [dist/commands/scan.ts](https://github.com/devaa-security/manifest-scanner/blob/v1.0.0/dist/commands/scan.ts)_
+
 <!-- commandsstop -->
 
 ## Manifest Plugins
