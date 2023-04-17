@@ -34,8 +34,6 @@ export default class Scan extends Command {
   public async run(): Promise<void> {
     const { args, flags } = await this.parse(Scan);
 
-    const name = flags.name ?? "world";
-    this.log(`hello ${name} from scan.ts`);
     if (flags.file && flags.report) {
       this.log(
         `you input --report and --file: ${flags.file} and ${flags.report}`
@@ -70,7 +68,7 @@ export default class Scan extends Command {
           (async () => {
             for (const folder of folders) {
               let files = await fs.readdir(folder);
-              files = files.filter((file: any) => file.endsWith(".js") || file.endsWith(".ts"));
+              files = files.filter((file: any) => file.endsWith(".js") || !file.endsWith(".d.ts"));
 
               for (const file of files) {
                 //    console.log(folder + "/" + file);
