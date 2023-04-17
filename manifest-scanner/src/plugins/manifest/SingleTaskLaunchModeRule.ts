@@ -40,7 +40,8 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
                 ManifestPlugin.manifestPath
               ), // TODO: return only relative path from root
               line: result?.line,
-              column: result?.column,
+              start_column: result?.start_column,
+              end_column: result?.end_column,
             });
           }
         }

@@ -64,8 +64,8 @@ export default class Scan extends Command {
             filePath,
             flags.file
           );
-          
-          const folders = [path.join(__dirname, '..', 'plugins', 'manifest')];
+
+          const folders = [path.join(__dirname, "..", "plugins", "manifest")];
 
           (async () => {
             for (const folder of folders) {
@@ -73,10 +73,14 @@ export default class Scan extends Command {
               for (const file of files) {
                 //    console.log(folder + "/" + file);
                 let fileWithoutExtension = file.split(".")[0];
-                let filePath = path.join(__dirname, "..", 'plugins', 'manifest', fileWithoutExtension);
-                const { default: Rule } = await import(
-                  filePath
+                let filePath = path.join(
+                  __dirname,
+                  "..",
+                  "plugins",
+                  "manifest",
+                  fileWithoutExtension
                 );
+                const { default: Rule } = await import(filePath);
                 let rule = new Rule();
                 rule.run();
                 // console.log(rule.issues);

@@ -43,7 +43,8 @@ export default class APIKeysRule extends ManifestPlugin {
             ManifestPlugin.manifestPath
           ), // TODO: return only relative path from root
           line: lineNum,
-          column: 0, // TODO: Fix this
+          start_column: 0, // TODO: Fix this
+          end_column: 0, // TODO: Fix this
         });
       }
       lineNum++;

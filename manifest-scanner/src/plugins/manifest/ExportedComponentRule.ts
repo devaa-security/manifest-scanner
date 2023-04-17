@@ -308,7 +308,8 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.manifestPath
           ),
           line: result?.line,
-          column: result?.column,
+          start_column: result?.start_column,
+          end_column: result?.end_column,
         });
       } else if (isExported && !hasIntentFilter) {
         const result = searchKeywordInFile(
@@ -326,7 +327,8 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.manifestPath
           ),
           line: result?.line,
-          column: result?.column,
+          start_column: result?.start_column,
+          end_column: result?.end_column,
         });
       }
 
@@ -353,7 +355,8 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.manifestPath
                   ),
                   line: result?.line,
-                  column: result?.column,
+                  start_column: result?.start_column,
+                  end_column: result?.end_column,
                 });
               } else if (permission && ManifestPlugin.minSdk < 20) {
                 this.issues.push({
@@ -366,7 +369,8 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.manifestPath
                   ),
                   line: result?.line,
-                  column: result?.column,
+                  start_column: result?.start_column,
+                  end_column: result?.end_column,
                 });
               } else {
                 this.issues.push({
@@ -379,7 +383,8 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   ),
                   name: "Exported Components Check",
                   line: result?.line,
-                  column: result?.column,
+                  start_column: result?.start_column,
+                  end_column: result?.end_column,
                 });
               }
             });

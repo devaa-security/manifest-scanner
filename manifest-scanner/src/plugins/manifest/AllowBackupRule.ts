@@ -34,7 +34,8 @@ export default class AllowBackupRule extends ManifestPlugin {
               ManifestPlugin.manifestPath
             ),
             line: result?.line,
-            column: result?.column,
+            start_column: result?.start_column,
+            end_column: result?.end_column,
           });
         }
       }

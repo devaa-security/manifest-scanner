@@ -3,9 +3,10 @@
 Android Manifest Scanner CLI - DEVAA Security
 
 <!-- toc -->
-* [manifest-scanner](#manifest-scanner)
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [manifest-scanner](#manifest-scanner)
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
@@ -31,8 +32,7 @@ USAGE
 
 # Commands
 
-* [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
-
+- [`manifest-scanner help [COMMANDS]`](#manifest-scanner-help-commands)
 
 ## `manifest-scanner help [COMMANDS]`
 
@@ -52,7 +52,6 @@ DESCRIPTION
   Display help for manifest-scanner.
 ```
 
-
 ## `manifest-scanner scan`
 
 DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file
@@ -71,4 +70,5 @@ DESCRIPTION
 ```
 
 _See code: [dist/commands/scan.ts](https://github.com/devaa-security/manifest-scanner/blob/v1.0.1/dist/commands/scan.ts)_
+
 <!-- commandsstop -->

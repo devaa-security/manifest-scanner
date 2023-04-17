@@ -53,7 +53,8 @@ device that can negatively impact the user.";
                   ManifestPlugin.manifestPath
                 ), // TODO: return only relative path from root
                 line: result?.line,
-                column: result?.column,
+                start_column: result?.start_column,
+                end_column: result?.end_column,
               });
             }
             // else if protection level is signature or signatureOrSystem  add to issues
@@ -73,7 +74,8 @@ device that can negatively impact the user.";
                     ManifestPlugin.manifestPath
                   ), // TODO: return only relative path from root
                   line: result?.line,
-                  column: result?.column,
+                  start_column: result?.start_column,
+                  end_column: result?.end_column,
                 });
               }
             }
