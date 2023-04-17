@@ -69,7 +69,9 @@ export default class Scan extends Command {
 
           (async () => {
             for (const folder of folders) {
-              const files = await fs.readdir(folder);
+              let files = await fs.readdir(folder);
+              files = files.filter((file: any) => file.endsWith(".js") || file.endsWith(".ts"));
+
               for (const file of files) {
                 //    console.log(folder + "/" + file);
                 let fileWithoutExtension = file.split(".")[0];
