@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/manifest-scanner.svg)](https://badge.fury.io/js/manifest-scanner)
 
-`Manifest Scanner` is a drop-in replacement for outdated `linkedin/qark` scanner tool. This scanner scans Android source code project and leverages plugins (such as Java AST) to find vulnerabilities and vulnerable configurations within the Android project 📱. Try [DEVAA Scanner](https://devaasecurity.com/) which has advanced security rules check, reduces false positives and nice integrates with your app development workflow.
+`Manifest Scanner` is a opensource drop-in replacement for outdated `linkedin/qark` scanner tool. This scanner scans Android source code project and leverages plugins (such as Java AST) to find vulnerabilities and vulnerable configurations within the Android project 📱. Try [DEVAA Scanner](https://devaasecurity.com/) which has advanced security rules check, reduces false positives and nice integrates with your app development workflow.
 
 ## Usage
 
