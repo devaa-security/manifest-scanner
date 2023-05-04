@@ -40,3 +40,7 @@ manifest-scanner/1.0.1 win32-x64 node-v18.15.0
 ### Contribution
 
 - @s5dev
+
+### License
+
+MIT License
