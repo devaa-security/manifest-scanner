@@ -278,13 +278,13 @@ if the Intent carries data that is tainted (2nd order injection)`;
     const permission = tag.$['android:permission']
     const name = tag.$['android:name']
     const tag_info = TAG_INFO[exported_tag]
-    const isProvider = exported_tag == 'provider'
+    const isProvider = exported_tag === 'provider'
 
-    if (isExported == 'false') {
+    if (isExported === 'false') {
       return
     }
 
-    if ((isExported && isExported != 'false') || isProvider) {
+    if ((isExported && isExported !== 'false') || isProvider) {
       if (
         (isProvider && ManifestPlugin.minSdk > 16) ||
         ManifestPlugin.targetSdk > 16
