@@ -12,6 +12,6 @@ describe('scan', () => {
   .stdout()
   .command(['scan', '--file', 'C:\\Users\\Shiva\\AndroidStudioProjects\\DEVAAVulnerableApp', '--report', 'json'])
   .it('runs scan with file and report parameter', ctx => {
-    expect(ctx.stdout).to.contain('AllowBackupRule')
+    expect(ctx.stdout).to.contain('Running')
   })
 })

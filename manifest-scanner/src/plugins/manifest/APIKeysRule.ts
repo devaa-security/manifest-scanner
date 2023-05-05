@@ -6,9 +6,9 @@ import * as fs from 'node:fs'
 export default class APIKeysRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
 
-  API_KEY_REGEX = '(?=.{20,})(?=.+d)(?=.+[a-z])(?=.+[A-Z])';
-  SPECIAL_CHARACTER_REGEX = '(?=.+[!$%^~])';
-  HARDCODED_API_KEY_REGEX = 'api_key|api|key';
+  API_KEY_REGEX = new RegExp('(?=.{20,})(?=.+d)(?=.+[a-z])(?=.+[A-Z])');
+  SPECIAL_CHARACTER_REGEX = new RegExp('/(?=.+[!$%^~])/');
+  HARDCODED_API_KEY_REGEX = new RegExp('api_key|api|key');
   META_DATA_REGEX = '<meta-data';
 
   constructor() {
@@ -41,7 +41,7 @@ export default class APIKeysRule extends ManifestPlugin {
           file: getRelativePath(
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
-          ), // TODO: return only relative path from root
+          ),
           line: lineNum,
           start_column: 0, // TODO: Fix this
           end_column: 0, // TODO: Fix this
