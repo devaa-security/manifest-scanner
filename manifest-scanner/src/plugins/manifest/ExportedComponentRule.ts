@@ -250,26 +250,26 @@ if the Intent carries data that is tainted (2nd order injection)`;
       }
     }
 
-    // write a code to traverse directory recursively and get all java files
-    const directoryPath =
-      'C:\\Users\\Shiva\\AndroidStudioProjects\\DEVAAVulnerableApp'
-    let javaFiles = []
-    javaFiles = getJavaFiles(directoryPath)
-    // console.log(javaFiles)
+    // // write a code to traverse directory recursively and get all java files
+    // const directoryPath =
+    //   'C:\\Users\\Shiva\\AndroidStudioProjects\\DEVAAVulnerableApp'
+    // let javaFiles = []
+    // javaFiles = getJavaFiles(directoryPath)
+    // // console.log(javaFiles)
 
-    for (const javaFile of javaFiles) {
-      // read file using fs
-      // const file = fs.readFileSync(javaFile, "utf8");
-      // // console.log(file);
-      // const cst = parse(file);
-      // //  console.log(cst);
-      // const methodcollector = new MethodCollector();
-      // // The CST result from the previous code snippet
-      // methodcollector.visit(cst);
-      // methodcollector.customResult.forEach((arrowOffset) => {
-      //   console.log(arrowOffset);
-      // });
-    }
+    // for (const javaFile of javaFiles) {
+    //   // read file using fs
+    //   // const file = fs.readFileSync(javaFile, "utf8");
+    //   // // console.log(file);
+    //   // const cst = parse(file);
+    //   // //  console.log(cst);
+    //   // const methodcollector = new MethodCollector();
+    //   // // The CST result from the previous code snippet
+    //   // methodcollector.visit(cst);
+    //   // methodcollector.customResult.forEach((arrowOffset) => {
+    //   //   console.log(arrowOffset);
+    //   // });
+    // }
   }
 
   checkManifestIssue(exported_tag: string, tag: any): void {
