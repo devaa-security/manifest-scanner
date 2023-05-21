@@ -298,11 +298,15 @@ if the Intent carries data that is tainted (2nd order injection)`;
           exported_tag,
         )
 
+        let description = this.EXPORTED_AND_PERMISSION_TAG
+        description = description.replace('{tag}', exported_tag)
+        description = description.replace('{tag_name}', name)
+
         this.issues.push({
           category: 'Manifest',
           severity: Severity.INFO,
           name: 'Exported Components Check',
-          description: this.EXPORTED_AND_PERMISSION_TAG,
+          description: description,
           file: getRelativePath(
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
@@ -317,11 +321,15 @@ if the Intent carries data that is tainted (2nd order injection)`;
           exported_tag,
         )
 
+        let description = this.EXPORTED
+        description = description.replace('{tag}', exported_tag)
+        description = description.replace('{tag_name}', name)
+
         this.issues.push({
           category: 'Manifest',
           severity: Severity.WARNING,
           name: 'Exported Components Check',
-          description: this.EXPORTED,
+          description: description,
           file: getRelativePath(
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
@@ -345,10 +353,15 @@ if the Intent carries data that is tainted (2nd order injection)`;
               )
 
               if (this.PROTECTED_BROADCASTS.includes(actionName)) {
+
+                let description = this.EXPORTED_IN_PROTECTED
+                description = description.replace('{tag}', exported_tag)
+                description = description.replace('{tag_name}', name)
+
                 this.issues.push({
                   category: 'Manifest',
                   severity: Severity.INFO,
-                  description: this.EXPORTED_IN_PROTECTED,
+                  description: description,
                   name: 'Exported Components Check',
                   file: getRelativePath(
                     ManifestPlugin.androidProjectDirectory,
@@ -359,10 +372,15 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   end_column: result?.end_column,
                 })
               } else if (permission && ManifestPlugin.minSdk < 20) {
+
+                let description = this.EXPORTED_AND_PERMISSION_TAG
+                description = description.replace('{tag}', exported_tag)
+                description = description.replace('{tag_name}', name)
+
                 this.issues.push({
                   category: 'Manifest',
                   severity: Severity.INFO,
-                  description: this.EXPORTED_AND_PERMISSION_TAG,
+                  description: description,
                   name: 'Exported Components Check',
                   file: getRelativePath(
                     ManifestPlugin.androidProjectDirectory,
@@ -373,10 +391,15 @@ if the Intent carries data that is tainted (2nd order injection)`;
                   end_column: result?.end_column,
                 })
               } else {
+
+                let description = this.EXPORTED
+                description = description.replace('{tag}', exported_tag)
+                description = description.replace('{tag_name}', name)
+
                 this.issues.push({
                   category: 'Manifest',
                   severity: Severity.WARNING,
-                  description: this.EXPORTED,
+                  description: description,
                   file: getRelativePath(
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
