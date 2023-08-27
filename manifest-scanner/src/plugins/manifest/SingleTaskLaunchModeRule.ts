@@ -1,5 +1,5 @@
-import { ManifestPlugin } from "../ManifestPlugin";
-import { Severity, getRelativePath, searchKeywordInFile } from "../util";
+import {ManifestPlugin} from '../ManifestPlugin'
+import {Severity, getRelativePath, searchKeywordInFile} from '../util'
 
 export default class SingleTaskLaunchModeRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
@@ -10,40 +10,40 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
 
   constructor() {
     super(
-      "Manifest",
+      'Manifest',
       Severity.WARNING,
-      SingleTaskLaunchModeRule.TASK_LAUNCH_MODE_DESCRIPTION
-    );
+      SingleTaskLaunchModeRule.TASK_LAUNCH_MODE_DESCRIPTION,
+    )
   }
 
   run(): void {
-    console.log("✅ Running SingleTaskLaunchMode Rule");
+    console.log('✅ Running SingleTaskLaunchMode Rule')
     const activityTag =
-      ManifestPlugin.manifestXMLObject.manifest.application[0].activity;
+      ManifestPlugin.manifestXMLObject.manifest.application[0].activity
     if (activityTag) {
       activityTag.forEach((activity: any) => {
-        const launchMode = activity.$["android:launchMode"];
+        const launchMode = activity.$['android:launchMode']
 
-        if (launchMode && launchMode === "singleTask") {
+        if (launchMode && launchMode === 'singleTask') {
           const result = searchKeywordInFile(
             ManifestPlugin.manifestPath,
-            "android:launchMode"
-          );
+            'android:launchMode',
+          )
           this.issues.push({
             category: this.category,
             severity: this.severity,
-            name: "Single Task Launch Mode Check",
+            name: 'Single Task Launch Mode Check',
             description: this.description,
             file: getRelativePath(
               ManifestPlugin.androidProjectDirectory,
-              ManifestPlugin.manifestPath
+              ManifestPlugin.manifestPath,
             ), // TODO: return only relative path from root
             line: result?.line,
             start_column: result?.start_column,
             end_column: result?.end_column,
-          });
+          })
         }
-      });
+      })
     }
   }
 }

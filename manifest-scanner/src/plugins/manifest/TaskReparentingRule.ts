@@ -1,5 +1,5 @@
-import { ManifestPlugin } from "../ManifestPlugin";
-import { Severity, getRelativePath, searchKeywordInFile } from "../util";
+import {ManifestPlugin} from '../ManifestPlugin'
+import {Severity, getRelativePath, searchKeywordInFile} from '../util'
 
 export default class TaskReParentingRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
@@ -10,40 +10,40 @@ https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-
 
   constructor() {
     super(
-      "Manifest",
+      'Manifest',
       Severity.WARNING,
-      TaskReParentingRule.TASK_REPARENTING_DESCRIPTION
-    );
+      TaskReParentingRule.TASK_REPARENTING_DESCRIPTION,
+    )
   }
 
   run(): void {
-    console.log("✅ Running Task ReParenting Rule");
+    console.log('✅ Running Task ReParenting Rule')
     const activityTag =
-      ManifestPlugin.manifestXMLObject.manifest.application[0].activity;
+      ManifestPlugin.manifestXMLObject.manifest.application[0].activity
     if (activityTag) {
       activityTag.forEach((activity: any) => {
-        const launchMode = activity.$["android:allowTaskReparenting"];
+        const launchMode = activity.$['android:allowTaskReparenting']
 
-        if (launchMode && launchMode === "true") {
+        if (launchMode && launchMode === 'true') {
           const result = searchKeywordInFile(
             ManifestPlugin.manifestPath,
-            "android:allowTaskReparenting"
-          );
+            'android:allowTaskReparenting',
+          )
           this.issues.push({
             category: this.category,
             severity: this.severity,
-            name: "Task ReParenting Check",
+            name: 'Task ReParenting Check',
             description: this.description,
             file: getRelativePath(
               ManifestPlugin.androidProjectDirectory,
-              ManifestPlugin.manifestPath
+              ManifestPlugin.manifestPath,
             ), // TODO: return only relative path from root
             line: result?.line,
             start_column: result?.start_column,
             end_column: result?.end_column,
-          });
+          })
         }
-      });
+      })
     }
   }
 }
