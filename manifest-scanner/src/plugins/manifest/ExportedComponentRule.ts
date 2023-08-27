@@ -1,10 +1,9 @@
-import { BaseJavaCstVisitorWithDefaults } from 'java-parser'
-import { ManifestPlugin } from '../ManifestPlugin'
-import { Severity, getRelativePath, searchKeywordInFile } from '../util'
-import path from 'node:path';
-import { execFileSync } from 'node:child_process';
-const { execFile } = require('child_process');
-
+import {BaseJavaCstVisitorWithDefaults} from 'java-parser'
+import {ManifestPlugin} from '../ManifestPlugin'
+import {Severity, getRelativePath, searchKeywordInFile} from '../util'
+import path from 'node:path'
+import {execFileSync} from 'node:child_process'
+const {execFile} = require('child_process')
 
 export default class ExportedComponentRule extends ManifestPlugin {
   BAD_EXPORTED_TAGS = [
@@ -275,7 +274,6 @@ if the Intent carries data that is tainted (2nd order injection)`;
     //   });
 
     // }
-
   }
 
   checkManifestIssue(exported_tag: string, tag: any): void {
@@ -293,36 +291,51 @@ if the Intent carries data that is tainted (2nd order injection)`;
     }
 
     if (ManifestPlugin.isASTEnabled) {
-      const resourceDir = path.resolve(path.join(__dirname, "..", "..", "resource"))
+      const resourceDir = path.resolve(
+        path.join(__dirname, '..', '..', 'resource'),
+      )
 
-      const javaPath = 'java';
-      const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
-      let lastDotIndex = name.lastIndexOf('.');
-      const className = name.substring(lastDotIndex + 1);
-      
+      const javaPath = 'java'
+      const jarPath = path.join(
+        resourceDir,
+        'android-project-parser-1.0-SNAPSHOT-shaded.jar',
+      )
+      const lastDotIndex = name.lastIndexOf('.')
+      const className = name.slice(Math.max(0, lastDotIndex + 1))
+
       const args = [
         '-jar',
         jarPath,
         'find-methods-declaration-invocations-arguments',
         ManifestPlugin.androidProjectDirectory,
-        className
-      ];
+        className,
+      ]
 
-      const result = execFileSync(javaPath, args);
+      const result = execFileSync(javaPath, args)
 
       if (result) {
-        methodResults = JSON.parse(result.toString());
+        methodResults = JSON.parse(result.toString())
         if (!methodResults.errorMessage && methodResults.length > 0) {
-          let declaredMethods = methodResults;
-          declaredMethods.forEach((declaredMethod: { methodInvocations: any[]; }) => {
-            if (declaredMethod.methodInvocations.length > 0) {
-              declaredMethod.methodInvocations.forEach((methodInvocation: { methodName: string, arguments: [] }) => {
-                if (this.EXTRAS_METHOD_NAMES.includes(methodInvocation.methodName)) {
-                  argumentVal = argumentVal.concat(methodInvocation.arguments)
-                }
-              });
-            }
-          });
+          const declaredMethods = methodResults
+          declaredMethods.forEach(
+            (declaredMethod: { methodInvocations: any[] }) => {
+              if (declaredMethod.methodInvocations.length > 0) {
+                declaredMethod.methodInvocations.forEach(
+                  (methodInvocation: { methodName: string; arguments: [] }) => {
+                    if (
+                      this.EXTRAS_METHOD_NAMES.includes(
+                        methodInvocation.methodName,
+                      )
+                    ) {
+                      argumentVal = argumentVal.concat(
+                        methodInvocation.arguments,
+                      )
+                    }
+                  },
+                )
+              }
+            },
+          )
         }
       }
     }
@@ -355,9 +368,9 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.manifestPath,
           ),
           exploit: {
-            "exported_enum": name,
-            "tag_name": exported_tag,
-            "arguments": argumentVal,
+            exported_enum: name,
+            tag_name: exported_tag,
+            arguments: argumentVal,
           },
           line: result?.line,
           start_column: result?.start_column,
@@ -383,10 +396,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.manifestPath,
           ),
           exploit: {
-            "exported_enum": name,
-            "tag_name": exported_tag,
-            "package_name": ManifestPlugin.packageName,
-            "arguments": argumentVal
+            exported_enum: name,
+            tag_name: exported_tag,
+            package_name: ManifestPlugin.packageName,
+            arguments: argumentVal,
           },
           line: result?.line,
           start_column: result?.start_column,
@@ -407,7 +420,6 @@ if the Intent carries data that is tainted (2nd order injection)`;
               )
 
               if (this.PROTECTED_BROADCASTS.includes(actionName)) {
-
                 let description = this.EXPORTED_IN_PROTECTED
                 description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
@@ -422,17 +434,16 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.manifestPath,
                   ),
                   exploit: {
-                    "exported_enum": name,
-                    "tag_name": exported_tag,
-                    "package_name": ManifestPlugin.packageName,
-                    "arguments": argumentVal
+                    exported_enum: name,
+                    tag_name: exported_tag,
+                    package_name: ManifestPlugin.packageName,
+                    arguments: argumentVal,
                   },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
                 })
               } else if (permission && ManifestPlugin.minSdk < 20) {
-
                 let description = this.EXPORTED_AND_PERMISSION_TAG
                 description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
@@ -447,17 +458,16 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.manifestPath,
                   ),
                   exploit: {
-                    "exported_enum": name,
-                    "tag_name": exported_tag,
-                    "package_name": ManifestPlugin.packageName,
-                    "arguments": argumentVal
+                    exported_enum: name,
+                    tag_name: exported_tag,
+                    package_name: ManifestPlugin.packageName,
+                    arguments: argumentVal,
                   },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
                 })
               } else {
-
                 let description = this.EXPORTED
                 description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
@@ -471,10 +481,10 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.manifestPath,
                   ),
                   exploit: {
-                    "exported_enum": name,
-                    "tag_name": exported_tag,
-                    "package_name": ManifestPlugin.packageName,
-                    "arguments": argumentVal
+                    exported_enum: name,
+                    tag_name: exported_tag,
+                    package_name: ManifestPlugin.packageName,
+                    arguments: argumentVal,
                   },
                   name: 'Exported Components Check',
                   line: result?.line,

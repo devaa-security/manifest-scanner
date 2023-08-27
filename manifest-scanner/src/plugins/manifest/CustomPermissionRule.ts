@@ -59,16 +59,16 @@ device that can negatively impact the user.';
               })
             }
             // else if protection level is signature or signatureOrSystem  add to issues
-            else if ((
-              protectionLevel === 'signature' ||
-              protectionLevel === 'signatureOrSystem'
-            ) && ManifestPlugin.targetSdk < 21) {
+            else if (
+              (protectionLevel === 'signature' ||
+                protectionLevel === 'signatureOrSystem') &&
+              ManifestPlugin.targetSdk < 21
+            ) {
               this.issues.push({
                 category: this.category,
                 name: 'Custom Permission Check',
                 severity: this.severity,
-                description:
-                    this.SIGNATURE_OR_SIGNATURE_OR_SYSTEM_DESCRIPTION,
+                description: this.SIGNATURE_OR_SIGNATURE_OR_SYSTEM_DESCRIPTION,
                 file: getRelativePath(
                   ManifestPlugin.androidProjectDirectory,
                   ManifestPlugin.manifestPath,

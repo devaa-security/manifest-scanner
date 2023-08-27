@@ -8,7 +8,7 @@ export default abstract class ManifestPlugin extends BasePlugin {
   static targetSdk = -1;
   static packageName = 'PACKAGE_NOT_FOUND';
   static androidProjectDirectory = '';
-  static isASTEnabled = false
+  static isASTEnabled = false;
 
   // add constructor accepting category, severity and description
   constructor(category: string, severity: Severity, description: string) {

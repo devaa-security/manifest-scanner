@@ -27,7 +27,8 @@ export default class Scan extends Command {
     }),
     enableAST: Flags.boolean({
       char: 'a',
-      description: 'Enable AST to parse Android Studio Project Java & Kotlin source code',
+      description:
+        'Enable AST to parse Android Studio Project Java & Kotlin source code',
     }),
   };
 
@@ -60,12 +61,14 @@ export default class Scan extends Command {
       parseXmlFileToJson(filePath)
       .then((result: any) => {
         //  console.log(JSON.stringify(result, null, 2));
-        const AndroidManifestXML = JSON.parse(JSON.stringify(result, null, 2))
+        const AndroidManifestXML = JSON.parse(
+          JSON.stringify(result, null, 2),
+        )
         ManifestPlugin.updateManifest(
           AndroidManifestXML,
           filePath,
           flags.file,
-          flags.enableAST
+          flags.enableAST,
         )
 
         const folders = [path.join(__dirname, '..', 'plugins', 'manifest')];
@@ -73,7 +76,9 @@ export default class Scan extends Command {
         (async () => {
           for (const folder of folders) {
             let files = await fs.readdir(folder)
-            files = files.filter((file: any) => file.endsWith('.js') || !file.endsWith('.d.ts'))
+            files = files.filter(
+              (file: any) => file.endsWith('.js') || !file.endsWith('.d.ts'),
+            )
 
             for (const file of files) {
               //    console.log(folder + "/" + file);
