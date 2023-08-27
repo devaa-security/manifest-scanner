@@ -14,7 +14,8 @@
     "/bin",
     "/dist",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "/dist/resource/*.jar"
   ],
   "dependencies": {
     "@oclif/core": "^2",
@@ -57,7 +58,7 @@
     }
   },
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
+    "build": "shx rm -rf dist && tsc -b && npm run copy-jar",
     "lint": "eslint . --ext .ts --config .eslintrc --fix",
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "npm run lint",
