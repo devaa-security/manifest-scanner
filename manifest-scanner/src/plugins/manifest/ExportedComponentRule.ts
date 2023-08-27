@@ -2,6 +2,7 @@ import { BaseJavaCstVisitorWithDefaults } from 'java-parser'
 import { ManifestPlugin } from '../ManifestPlugin'
 import { Severity, getRelativePath, searchKeywordInFile } from '../util'
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 const { execFile } = require('child_process');
 
 
@@ -52,8 +53,6 @@ export default class ExportedComponentRule extends ManifestPlugin {
     'getShortExtra',
     'getStringArrayExtra',
     'getStringArrayListExtra',
-    'getString',
-    'getInt',
   ];
 
   PROTECTED_BROADCASTS = [
@@ -250,32 +249,32 @@ if the Intent carries data that is tainted (2nd order injection)`;
       }
     }
 
-    // check if enableAST flag is set
-    if (ManifestPlugin.isASTEnabled) {
-      const resourceDir = path.resolve(path.join(__dirname, "..","..", "resource"))
+    // // check if enableAST flag is set
+    // if (ManifestPlugin.isASTEnabled) {
+    //   const resourceDir = path.resolve(path.join(__dirname, "..", "..", "resource"))
 
-      const javaPath = 'java';
-      const jarPath = path.join(resourceDir,'android-project-parser-1.0-SNAPSHOT-shaded.jar');
-      const className = 'MainActivity';
+    //   const javaPath = 'java';
+    //   const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
+    //   const className = 'MainActivity';
 
-      const args = [
-        '-jar',
-        jarPath,
-        'find-methods-declaration-invocations-arguments',
-        ManifestPlugin.androidProjectDirectory,
-        className
-      ];
+    //   const args = [
+    //     '-jar',
+    //     jarPath,
+    //     'find-methods-declaration-invocations-arguments',
+    //     ManifestPlugin.androidProjectDirectory,
+    //     className
+    //   ];
 
-      execFile(javaPath, args, (error: Error | null, stdout: string, stderr: string) => {
-        if (error) {
-          console.error(`exec error: ${error}`);
-        } else {
-          const methodResults = JSON.parse(stdout)
-          console.log(methodResults.length)
-        }
-      });
+    //   execFile(javaPath, args, (error: Error | null, stdout: string, stderr: string) => {
+    //     if (error) {
+    //       console.error(`exec error: ${error}`);
+    //     } else {
+    //       const methodResults = JSON.parse(stdout)
+    //       console.log(methodResults[0].methodInvocations[6].methodName)
+    //     }
+    //   });
 
-    }
+    // }
 
   }
 
@@ -286,9 +285,46 @@ if the Intent carries data that is tainted (2nd order injection)`;
     const name = tag.$['android:name']
     const tag_info = TAG_INFO[exported_tag]
     const isProvider = exported_tag === 'provider'
+    let methodResults = []
+    let argumentVal: string[] = []
 
     if (isExported === 'false') {
       return
+    }
+
+    if (ManifestPlugin.isASTEnabled) {
+      const resourceDir = path.resolve(path.join(__dirname, "..", "..", "resource"))
+
+      const javaPath = 'java';
+      const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
+      let lastDotIndex = name.lastIndexOf('.');
+      const className = name.substring(lastDotIndex + 1);
+
+      const args = [
+        '-jar',
+        jarPath,
+        'find-methods-declaration-invocations-arguments',
+        ManifestPlugin.androidProjectDirectory,
+        className
+      ];
+
+      const result = execFileSync(javaPath, args);
+
+      if (result) {
+        methodResults = JSON.parse(result.toString());
+        if (methodResults.length > 0) {
+          let declaredMethods = methodResults;
+          declaredMethods.forEach((declaredMethod: { methodInvocations: any[]; }) => {
+            if (declaredMethod.methodInvocations.length > 0) {
+              declaredMethod.methodInvocations.forEach((methodInvocation: { methodName: string, arguments: [] }) => {
+                if (this.EXTRAS_METHOD_NAMES.includes(methodInvocation.methodName)) {
+                  argumentVal = argumentVal.concat(methodInvocation.arguments)
+                }
+              });
+            }
+          });
+        }
+      }
     }
 
     if ((isExported && isExported !== 'false') || isProvider) {
@@ -321,9 +357,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
           exploit: {
             "exported_enum": name,
             "tag_name": exported_tag,
-            "arguments": [
-              "1"
-            ]
+            "arguments": argumentVal,
           },
           line: result?.line,
           start_column: result?.start_column,
@@ -352,9 +386,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
             "exported_enum": name,
             "tag_name": exported_tag,
             "package_name": ManifestPlugin.packageName,
-            "arguments": [
-              "1"
-            ]
+            "arguments": argumentVal
           },
           line: result?.line,
           start_column: result?.start_column,
@@ -393,9 +425,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     "exported_enum": name,
                     "tag_name": exported_tag,
                     "package_name": ManifestPlugin.packageName,
-                    "arguments": [
-                      "1"
-                    ]
+                    "arguments": argumentVal
                   },
                   line: result?.line,
                   start_column: result?.start_column,
@@ -420,9 +450,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     "exported_enum": name,
                     "tag_name": exported_tag,
                     "package_name": ManifestPlugin.packageName,
-                    "arguments": [
-                      "1"
-                    ]
+                    "arguments": argumentVal
                   },
                   line: result?.line,
                   start_column: result?.start_column,
@@ -446,9 +474,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     "exported_enum": name,
                     "tag_name": exported_tag,
                     "package_name": ManifestPlugin.packageName,
-                    "arguments": [
-                      "1"
-                    ]
+                    "arguments": argumentVal
                   },
                   name: 'Exported Components Check',
                   line: result?.line,
