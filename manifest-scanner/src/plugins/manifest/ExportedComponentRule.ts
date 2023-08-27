@@ -306,7 +306,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         )
 
         let description = this.EXPORTED_AND_PERMISSION_TAG
-        description = description.replace('{tag}', exported_tag)
+        description = description.replaceAll('{tag}', exported_tag)
         description = description.replace('{tag_name}', name)
 
         this.issues.push({
@@ -329,7 +329,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         )
 
         let description = this.EXPORTED
-        description = description.replace('{tag}', exported_tag)
+        description = description.replaceAll('{tag}', exported_tag)
         description = description.replace('{tag_name}', name)
 
         this.issues.push({
@@ -362,7 +362,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               if (this.PROTECTED_BROADCASTS.includes(actionName)) {
 
                 let description = this.EXPORTED_IN_PROTECTED
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -381,7 +381,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               } else if (permission && ManifestPlugin.minSdk < 20) {
 
                 let description = this.EXPORTED_AND_PERMISSION_TAG
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -400,7 +400,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               } else {
 
                 let description = this.EXPORTED
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -461,37 +461,4 @@ const TAG_INFO: any = {
   activity: Activity,
   'activity-alias': Activity,
   service: Service,
-}
-
-class MethodCollector extends BaseJavaCstVisitorWithDefaults {
-  customResult: any[];
-  constructor() {
-    super()
-    this.customResult = []
-    this.validateVisitor()
-  }
-
-  // methodDeclarator - method declaration
-  // method
-
-  // This method override gives you actual method declaration like onCreate, onClick, onCreateOptionsMenu
-  methodDeclarator(ctx: any) {
-    // console.log(ctx.Identifier[0].image);
-    this.customResult.push(ctx.Identifier[0].image)
-  }
-
-  // this method resembles method invocation call
-  methodName(ctx: any) {
-    console.log("ddd")
-    console.log(ctx)
-  }
-
-  // this method gets you the method invoker argument list
-  // argumentList(ctx: any) {
-  //   console.log(ctx.expression);
-  // }
-
-  // importDeclaration(ctx: any) {
-  //   console.log(ctx.packageOrTypeName[0].children.Identifier);
-  // }
 }

@@ -27,7 +27,7 @@ export default class Scan extends Command {
     }),
     enableAST: Flags.boolean({
       char: 'a',
-      description: 'Enable AST to parse Android Studio Project Java source code',
+      description: 'Enable AST to parse Android Studio Project Java & Kotlin source code',
     }),
   };
 
