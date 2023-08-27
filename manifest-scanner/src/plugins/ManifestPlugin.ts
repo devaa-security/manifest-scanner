@@ -8,6 +8,7 @@ export default abstract class ManifestPlugin extends BasePlugin {
   static targetSdk = -1;
   static packageName = 'PACKAGE_NOT_FOUND';
   static androidProjectDirectory = '';
+  static isASTEnabled = false
 
   // add constructor accepting category, severity and description
   constructor(category: string, severity: Severity, description: string) {
@@ -19,11 +20,13 @@ export default abstract class ManifestPlugin extends BasePlugin {
     manifestXMLObject: any,
     ManifestPath: string,
     projectDirectory: any,
+    isASTEnabled: boolean,
   ) {
     // Users of this class should call this method instead of changing class attributes directly
     this.manifestXMLObject = manifestXMLObject
     this.manifestPath = ManifestPath
     this.androidProjectDirectory = projectDirectory
+    this.isASTEnabled = isASTEnabled
 
     try {
       this.minSdk =

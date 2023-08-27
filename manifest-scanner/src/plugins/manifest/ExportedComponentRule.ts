@@ -1,9 +1,10 @@
-import {BaseJavaCstVisitorWithDefaults} from 'java-parser'
-import {ManifestPlugin} from '../ManifestPlugin'
-import {Severity, getRelativePath, searchKeywordInFile} from '../util'
-import {getJavaFiles} from '../../utils/fileutils'
-const {parse} = require('java-parser')
-import * as fs from 'node:fs'
+import { BaseJavaCstVisitorWithDefaults } from 'java-parser'
+import { ManifestPlugin } from '../ManifestPlugin'
+import { Severity, getRelativePath, searchKeywordInFile } from '../util'
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+const { execFile } = require('child_process');
+
 
 export default class ExportedComponentRule extends ManifestPlugin {
   BAD_EXPORTED_TAGS = [
@@ -52,8 +53,6 @@ export default class ExportedComponentRule extends ManifestPlugin {
     'getShortExtra',
     'getStringArrayExtra',
     'getStringArrayListExtra',
-    'getString',
-    'getInt',
   ];
 
   PROTECTED_BROADCASTS = [
@@ -250,26 +249,33 @@ if the Intent carries data that is tainted (2nd order injection)`;
       }
     }
 
-    // // write a code to traverse directory recursively and get all java files
-    // const directoryPath =
-    //   'C:\\Users\\Shiva\\AndroidStudioProjects\\DEVAAVulnerableApp'
-    // let javaFiles = []
-    // javaFiles = getJavaFiles(directoryPath)
-    // // console.log(javaFiles)
+    // // check if enableAST flag is set
+    // if (ManifestPlugin.isASTEnabled) {
+    //   const resourceDir = path.resolve(path.join(__dirname, "..", "..", "resource"))
 
-    // for (const javaFile of javaFiles) {
-    //   // read file using fs
-    //   // const file = fs.readFileSync(javaFile, "utf8");
-    //   // // console.log(file);
-    //   // const cst = parse(file);
-    //   // //  console.log(cst);
-    //   // const methodcollector = new MethodCollector();
-    //   // // The CST result from the previous code snippet
-    //   // methodcollector.visit(cst);
-    //   // methodcollector.customResult.forEach((arrowOffset) => {
-    //   //   console.log(arrowOffset);
-    //   // });
+    //   const javaPath = 'java';
+    //   const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
+    //   const className = 'MainActivity';
+
+    //   const args = [
+    //     '-jar',
+    //     jarPath,
+    //     'find-methods-declaration-invocations-arguments',
+    //     ManifestPlugin.androidProjectDirectory,
+    //     className
+    //   ];
+
+    //   execFile(javaPath, args, (error: Error | null, stdout: string, stderr: string) => {
+    //     if (error) {
+    //       console.error(`exec error: ${error}`);
+    //     } else {
+    //       const methodResults = JSON.parse(stdout)
+    //       console.log(methodResults[0].methodInvocations[6].methodName)
+    //     }
+    //   });
+
     // }
+
   }
 
   checkManifestIssue(exported_tag: string, tag: any): void {
@@ -279,9 +285,46 @@ if the Intent carries data that is tainted (2nd order injection)`;
     const name = tag.$['android:name']
     const tag_info = TAG_INFO[exported_tag]
     const isProvider = exported_tag === 'provider'
+    let methodResults = []
+    let argumentVal: string[] = []
 
     if (isExported === 'false') {
       return
+    }
+
+    if (ManifestPlugin.isASTEnabled) {
+      const resourceDir = path.resolve(path.join(__dirname, "..", "..", "resource"))
+
+      const javaPath = 'java';
+      const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
+      let lastDotIndex = name.lastIndexOf('.');
+      const className = name.substring(lastDotIndex + 1);
+      
+      const args = [
+        '-jar',
+        jarPath,
+        'find-methods-declaration-invocations-arguments',
+        ManifestPlugin.androidProjectDirectory,
+        className
+      ];
+
+      const result = execFileSync(javaPath, args);
+
+      if (result) {
+        methodResults = JSON.parse(result.toString());
+        if (!methodResults.errorMessage && methodResults.length > 0) {
+          let declaredMethods = methodResults;
+          declaredMethods.forEach((declaredMethod: { methodInvocations: any[]; }) => {
+            if (declaredMethod.methodInvocations.length > 0) {
+              declaredMethod.methodInvocations.forEach((methodInvocation: { methodName: string, arguments: [] }) => {
+                if (this.EXTRAS_METHOD_NAMES.includes(methodInvocation.methodName)) {
+                  argumentVal = argumentVal.concat(methodInvocation.arguments)
+                }
+              });
+            }
+          });
+        }
+      }
     }
 
     if ((isExported && isExported !== 'false') || isProvider) {
@@ -299,7 +342,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         )
 
         let description = this.EXPORTED_AND_PERMISSION_TAG
-        description = description.replace('{tag}', exported_tag)
+        description = description.replaceAll('{tag}', exported_tag)
         description = description.replace('{tag_name}', name)
 
         this.issues.push({
@@ -311,6 +354,11 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
           ),
+          exploit: {
+            "exported_enum": name,
+            "tag_name": exported_tag,
+            "arguments": argumentVal,
+          },
           line: result?.line,
           start_column: result?.start_column,
           end_column: result?.end_column,
@@ -322,7 +370,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
         )
 
         let description = this.EXPORTED
-        description = description.replace('{tag}', exported_tag)
+        description = description.replaceAll('{tag}', exported_tag)
         description = description.replace('{tag_name}', name)
 
         this.issues.push({
@@ -334,6 +382,12 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
           ),
+          exploit: {
+            "exported_enum": name,
+            "tag_name": exported_tag,
+            "package_name": ManifestPlugin.packageName,
+            "arguments": argumentVal
+          },
           line: result?.line,
           start_column: result?.start_column,
           end_column: result?.end_column,
@@ -355,7 +409,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               if (this.PROTECTED_BROADCASTS.includes(actionName)) {
 
                 let description = this.EXPORTED_IN_PROTECTED
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -367,6 +421,12 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": argumentVal
+                  },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
@@ -374,7 +434,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               } else if (permission && ManifestPlugin.minSdk < 20) {
 
                 let description = this.EXPORTED_AND_PERMISSION_TAG
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -386,6 +446,12 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": argumentVal
+                  },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
@@ -393,7 +459,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
               } else {
 
                 let description = this.EXPORTED
-                description = description.replace('{tag}', exported_tag)
+                description = description.replaceAll('{tag}', exported_tag)
                 description = description.replace('{tag_name}', name)
 
                 this.issues.push({
@@ -404,6 +470,12 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": argumentVal
+                  },
                   name: 'Exported Components Check',
                   line: result?.line,
                   start_column: result?.start_column,
@@ -454,36 +526,4 @@ const TAG_INFO: any = {
   activity: Activity,
   'activity-alias': Activity,
   service: Service,
-}
-
-class MethodCollector extends BaseJavaCstVisitorWithDefaults {
-  customResult: any[];
-  constructor() {
-    super()
-    this.customResult = []
-    this.validateVisitor()
-  }
-
-  // methodDeclarator - method declaration
-  // method
-
-  // This method override gives you actual method declaration like onCreate, onClick, onCreateOptionsMenu
-  methodDeclarator(ctx: any) {
-    // console.log(ctx.Identifier[0].image);
-    this.customResult.push(ctx.Identifier[0].image)
-  }
-
-  // this method resembles method invocation call
-  // methodInvocationSuffix(ctx: any) {
-  //   console.log(ctx)
-  // }
-
-  // this method gets you the method invoker argument list
-  // argumentList(ctx: any) {
-  //   console.log(ctx.expression);
-  // }
-
-  // importDeclaration(ctx: any) {
-  //   console.log(ctx.packageOrTypeName[0].children.Identifier);
-  // }
 }
