@@ -299,7 +299,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
       const jarPath = path.join(resourceDir, 'android-project-parser-1.0-SNAPSHOT-shaded.jar');
       let lastDotIndex = name.lastIndexOf('.');
       const className = name.substring(lastDotIndex + 1);
-
+      
       const args = [
         '-jar',
         jarPath,
@@ -312,7 +312,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
 
       if (result) {
         methodResults = JSON.parse(result.toString());
-        if (methodResults.length > 0) {
+        if (!methodResults.errorMessage && methodResults.length > 0) {
           let declaredMethods = methodResults;
           declaredMethods.forEach((declaredMethod: { methodInvocations: any[]; }) => {
             if (declaredMethod.methodInvocations.length > 0) {
