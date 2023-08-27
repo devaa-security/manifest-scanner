@@ -318,6 +318,13 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
           ),
+          exploit: {
+            "exported_enum": name,
+            "tag_name": exported_tag,
+            "arguments": [
+              "1"
+            ]
+          },
           line: result?.line,
           start_column: result?.start_column,
           end_column: result?.end_column,
@@ -341,6 +348,14 @@ if the Intent carries data that is tainted (2nd order injection)`;
             ManifestPlugin.androidProjectDirectory,
             ManifestPlugin.manifestPath,
           ),
+          exploit: {
+            "exported_enum": name,
+            "tag_name": exported_tag,
+            "package_name": ManifestPlugin.packageName,
+            "arguments": [
+              "1"
+            ]
+          },
           line: result?.line,
           start_column: result?.start_column,
           end_column: result?.end_column,
@@ -374,6 +389,14 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": [
+                      "1"
+                    ]
+                  },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
@@ -393,6 +416,14 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": [
+                      "1"
+                    ]
+                  },
                   line: result?.line,
                   start_column: result?.start_column,
                   end_column: result?.end_column,
@@ -411,6 +442,14 @@ if the Intent carries data that is tainted (2nd order injection)`;
                     ManifestPlugin.androidProjectDirectory,
                     ManifestPlugin.manifestPath,
                   ),
+                  exploit: {
+                    "exported_enum": name,
+                    "tag_name": exported_tag,
+                    "package_name": ManifestPlugin.packageName,
+                    "arguments": [
+                      "1"
+                    ]
+                  },
                   name: 'Exported Components Check',
                   line: result?.line,
                   start_column: result?.start_column,
