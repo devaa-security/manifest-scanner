@@ -6,7 +6,7 @@ describe("scan", () => {
     .command(["help", "scan"])
     .it("runs scan help command", (ctx) => {
       expect(ctx.stdout).to.contain(
-        "DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file"
+        "DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Studio Project"
       );
     });
 
