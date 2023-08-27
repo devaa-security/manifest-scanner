@@ -3,10 +3,9 @@
 Android Manifest Scanner CLI - DEVAA Security
 
 <!-- toc -->
-
-- [manifest-scanner](#manifest-scanner)
-- [Usage](#usage)
-- [Commands](#commands)
+* [manifest-scanner](#manifest-scanner)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Usage
