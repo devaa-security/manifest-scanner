@@ -6,7 +6,7 @@ const fs = require('fs/promises')
 
 export default class Scan extends Command {
   static description =
-    'DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Manifest file';
+    'DEVAA Manifest Scanner helps to scan for vulnerable configurations in Android Studio Project';
 
   issues = [];
 
@@ -24,6 +24,10 @@ export default class Scan extends Command {
     output: Flags.string({
       char: 'o',
       description: 'Output File Path',
+    }),
+    enableAST: Flags.boolean({
+      char: 'a',
+      description: 'Enable AST to parse Android Studio Project Java source code',
     }),
   };
 
@@ -61,6 +65,7 @@ export default class Scan extends Command {
           AndroidManifestXML,
           filePath,
           flags.file,
+          flags.enableAST
         )
 
         const folders = [path.join(__dirname, '..', 'plugins', 'manifest')];

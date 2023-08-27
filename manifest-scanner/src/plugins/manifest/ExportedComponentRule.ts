@@ -1,9 +1,9 @@
-import {BaseJavaCstVisitorWithDefaults} from 'java-parser'
-import {ManifestPlugin} from '../ManifestPlugin'
-import {Severity, getRelativePath, searchKeywordInFile} from '../util'
-import {getJavaFiles} from '../../utils/fileutils'
-const {parse} = require('java-parser')
-import * as fs from 'node:fs'
+import { BaseJavaCstVisitorWithDefaults } from 'java-parser'
+import { ManifestPlugin } from '../ManifestPlugin'
+import { Severity, getRelativePath, searchKeywordInFile } from '../util'
+import path from 'node:path';
+const { execFile } = require('child_process');
+
 
 export default class ExportedComponentRule extends ManifestPlugin {
   BAD_EXPORTED_TAGS = [
@@ -250,26 +250,33 @@ if the Intent carries data that is tainted (2nd order injection)`;
       }
     }
 
-    // // write a code to traverse directory recursively and get all java files
-    // const directoryPath =
-    //   'C:\\Users\\Shiva\\AndroidStudioProjects\\DEVAAVulnerableApp'
-    // let javaFiles = []
-    // javaFiles = getJavaFiles(directoryPath)
-    // // console.log(javaFiles)
+    // check if enableAST flag is set
+    if (ManifestPlugin.isASTEnabled) {
+      const resourceDir = path.resolve(path.join(__dirname, "..","..", "resource"))
 
-    // for (const javaFile of javaFiles) {
-    //   // read file using fs
-    //   // const file = fs.readFileSync(javaFile, "utf8");
-    //   // // console.log(file);
-    //   // const cst = parse(file);
-    //   // //  console.log(cst);
-    //   // const methodcollector = new MethodCollector();
-    //   // // The CST result from the previous code snippet
-    //   // methodcollector.visit(cst);
-    //   // methodcollector.customResult.forEach((arrowOffset) => {
-    //   //   console.log(arrowOffset);
-    //   // });
-    // }
+      const javaPath = 'java';
+      const jarPath = path.join(resourceDir,'android-project-parser-1.0-SNAPSHOT-shaded.jar');
+      const className = 'MainActivity';
+
+      const args = [
+        '-jar',
+        jarPath,
+        'find-methods-declaration-invocations-arguments',
+        ManifestPlugin.androidProjectDirectory,
+        className
+      ];
+
+      execFile(javaPath, args, (error: Error | null, stdout: string, stderr: string) => {
+        if (error) {
+          console.error(`exec error: ${error}`);
+        } else {
+          const methodResults = JSON.parse(stdout)
+          console.log(methodResults.length)
+        }
+      });
+
+    }
+
   }
 
   checkManifestIssue(exported_tag: string, tag: any): void {
@@ -474,9 +481,10 @@ class MethodCollector extends BaseJavaCstVisitorWithDefaults {
   }
 
   // this method resembles method invocation call
-  // methodInvocationSuffix(ctx: any) {
-  //   console.log(ctx)
-  // }
+  methodName(ctx: any) {
+    console.log("ddd")
+    console.log(ctx)
+  }
 
   // this method gets you the method invoker argument list
   // argumentList(ctx: any) {
