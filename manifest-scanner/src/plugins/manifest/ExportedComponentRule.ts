@@ -298,7 +298,7 @@ if the Intent carries data that is tainted (2nd order injection)`;
       const javaPath = 'java'
       const jarPath = path.join(
         resourceDir,
-        'android-project-parser-1.0-SNAPSHOT-shaded.jar',
+        'android-project-parser-1.1-SNAPSHOT-shaded.jar',
       )
       const lastDotIndex = name.lastIndexOf('.')
       const className = name.slice(Math.max(0, lastDotIndex + 1))
