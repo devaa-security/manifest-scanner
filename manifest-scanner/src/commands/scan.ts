@@ -39,12 +39,6 @@ export default class Scan extends Command {
   public async run(): Promise<void> {
     const {args, flags} = await this.parse(Scan)
 
-    if (flags.file && flags.report) {
-      this.log(
-        `you input --report and --file: ${flags.file} and ${flags.report}`,
-      )
-    }
-
     // throw error if required flags are not provided
     if (!flags.file) {
       this.error('Please provide a file path')
