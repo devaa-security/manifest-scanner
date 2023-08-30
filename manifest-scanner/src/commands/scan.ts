@@ -65,7 +65,7 @@ export default class Scan extends Command {
           flags.enableAST,
         )
 
-        const folders = [path.join(__dirname, '..', 'plugins', 'manifest')];
+        const folders = [path.join(__dirname, '..', 'plugins', 'manifest'), path.join(__dirname, '..', 'plugins', 'webview')];
 
         (async () => {
           for (const folder of folders) {
@@ -78,10 +78,7 @@ export default class Scan extends Command {
               //    console.log(folder + "/" + file);
               const fileWithoutExtension = file.split('.')[0]
               const filePath = path.join(
-                __dirname,
-                '..',
-                'plugins',
-                'manifest',
+                folder,
                 fileWithoutExtension,
               )
               const {default: Rule} = await import(filePath)

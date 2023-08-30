@@ -20,6 +20,7 @@ describe('scan', () => {
     'json',
   ])
   .it('runs scan with file and report parameter', ctx => {
+    console.log(ctx.stdout.indexOf('Running'))
     expect(ctx.stdout).to.contain('Running')
   })
 })
