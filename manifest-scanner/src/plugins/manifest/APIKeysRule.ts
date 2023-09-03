@@ -1,30 +1,30 @@
-import {ManifestPlugin} from '../ManifestPlugin'
-import {Severity, getRelativePath, searchKeywordInFile} from '../util'
-import * as fs from 'node:fs'
+import { ManifestPlugin } from "../ManifestPlugin";
+import { Severity, getRelativePath, searchKeywordInFile } from "../util";
+import * as fs from "node:fs";
 
 // write a rule to check if the allowBackup attribute is set to true or false inside class AllowBackupRule extended from BaseRule implemeting run method
 export default class APIKeysRule extends ManifestPlugin {
   // add constructor accepting category, severity and description
 
-  API_KEY_REGEX = new RegExp('(?=.{20,})(?=.+d)(?=.+[a-z])(?=.+[A-Z])');
-  SPECIAL_CHARACTER_REGEX = new RegExp('/(?=.+[!$%^~])/');
-  HARDCODED_API_KEY_REGEX = new RegExp('api_key|api|key');
-  META_DATA_REGEX = '<meta-data';
+  API_KEY_REGEX = new RegExp("(?=.{20,})(?=.+d)(?=.+[a-z])(?=.+[A-Z])");
+  SPECIAL_CHARACTER_REGEX = new RegExp("/(?=.+[!$%^~])/");
+  HARDCODED_API_KEY_REGEX = new RegExp("api_key|api|key");
+  META_DATA_REGEX = "<meta-data";
 
   constructor() {
     super(
-      'Manifest',
+      "Manifest",
       Severity.INFO,
-      'Found API Keys: Please evaluate the sensitivity of the API keys and remove them if they are not required.',
-    )
+      "Found API Keys: Please evaluate the sensitivity of the API keys and remove them if they are not required."
+    );
   }
 
   run(): void {
-    console.log('✅ Running APIKeysRule')
+    console.log("✅ Running APIKeysRule");
     // read Manifest file line by line using fs sync read
-    const manifestFile = fs.readFileSync(ManifestPlugin.manifestPath, 'utf8')
-    const lines = manifestFile.split('\n')
-    let lineNum = 1
+    const manifestFile = fs.readFileSync(ManifestPlugin.manifestPath, "utf8");
+    const lines = manifestFile.split("\n");
+    let lineNum = 1;
     for (const line of lines) {
       // check if line contains API key regex
       // TODO: Improve check by parsing meta-data and calculate entropy
@@ -35,20 +35,20 @@ export default class APIKeysRule extends ManifestPlugin {
       ) {
         this.issues.push({
           category: this.category,
-          name: 'API Keys Check',
+          name: "API Keys Check",
           severity: this.severity,
           description: this.description,
           file: getRelativePath(
             ManifestPlugin.androidProjectDirectory,
-            ManifestPlugin.manifestPath,
+            ManifestPlugin.manifestPath
           ),
           line: lineNum,
           start_column: 0, // TODO: Fix this
           end_column: 0, // TODO: Fix this
-        })
+        });
       }
 
-      lineNum++
+      lineNum++;
     }
   }
 }
