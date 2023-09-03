@@ -9,7 +9,7 @@
 ```sh-session
 $ npm install -g manifest-scanner
 
-$ manifest-scanner scan --file <ANDROID_PROJECT_DIRECTORY> --report json --output <OUTPUT_FILE>
+$ manifest-scanner scan --file <ANDROID_PROJECT_DIRECTORY> --report json --output <OUTPUT_FILE> --enableAST
 
 ✅ Running AllowBackupRule
 ✅ Running AndroidDebuggableRule
@@ -18,13 +18,25 @@ $ manifest-scanner scan --file <ANDROID_PROJECT_DIRECTORY> --report json --outpu
 ✅ Running Exported Component Rule
 ✅ Running SingleTaskLaunchMode Rule
 ✅ Running Task ReParenting Rule
+✅ Running WebView setAllowContentAccess Rule
+✅ Running WebView SetAllowFileAccess Rule
+✅ Running Webview DomStorageEnabled Rule
+✅ Running Webview JavaScriptEnabled Rule
+✅ Running Webview JavascriptInterface Rule
+✅ Running Webview LoadDataWithBaseURL Rule
+✅ Running WebView setAllowUniversalAccessFromFileURLs Rule
+✅ Running WebView setWebContentsDebuggingEnabled Rule
 ...
 
 $ manifest-scanner (--version)
 manifest-scanner/1.0.1 win32-x64 node-v18.15.0
 ```
 
-### Basic Vulnerable Configuration Checks
+### Vulnerable Configuration Checks
+
+Learn Mobile Application Security Vulnerabilities and how to fix them with [DEVAA Scanner](https://devaasecurity.com/)
+ 
+Documentation Site: https://devaa-security.github.io/manifest-scanner/
 
 | **Rule**                     | **Description**                                                                                                                                                                                                                                                                                                                                  |
 |------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
