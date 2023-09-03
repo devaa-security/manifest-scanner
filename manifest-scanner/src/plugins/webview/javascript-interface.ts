@@ -14,7 +14,7 @@ export default class JavascriptInterface extends ManifestPlugin {
   }
 
   run(): void {
-    console.log('✅ Running JavascriptInterface Rule')
+    console.log('✅ Running Webview JavascriptInterface Rule')
 
     // get all files from directory
     const files = getJavaKotlinFiles(ManifestPlugin.androidProjectDirectory)

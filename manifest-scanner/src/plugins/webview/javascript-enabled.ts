@@ -13,7 +13,7 @@ export default class JavaScriptEnabled extends ManifestPlugin {
   }
 
   run(): void {
-    console.log('✅ Running JavaScriptEnabled Rule')
+    console.log('✅ Running Webview JavaScriptEnabled Rule')
 
     // get all files from directory
     const files = getJavaKotlinFiles(ManifestPlugin.androidProjectDirectory)
