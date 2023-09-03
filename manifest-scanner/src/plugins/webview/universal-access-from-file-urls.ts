@@ -2,32 +2,32 @@ import {ManifestPlugin} from '../ManifestPlugin'
 import {Severity, searchKeywordInFile, getRelativePath, getJavaKotlinFiles} from '../util'
 
 // write a rule to check if the javascript is set to true or false inside class WebView extended from BaseRule implemeting run method
-export default class SetAllowFileAccess extends ManifestPlugin {
+export default class setAllowUniversalAccessFromFileURLs extends ManifestPlugin {
   // add constructor accepting category, severity and description
 
   constructor() {
     super(
       'WebView',
       Severity.VULNERABILITY,
-      'The vulnerability concerns the WebView having file system access enabled. When a WebView can access the file system and untrusted data is used to determine the URL it opens, there\'s a risk that a malicious app or website could read the private files of your app, especially if the response is returned to them. It\'s crucial to be cautious about the sources from which the WebView loads content to prevent potential data breaches.'  
+      'In Android apps with a minSdkVersion less than 16, or in later versions where setAllowUniversalAccessFromFileURLs has been overridden, JavaScript running in a file scheme context has the ability to access content from any origin. This is considered a security risk due to the insecure default setting.'  
     )
   }
 
   run(): void {
-    console.log('✅ Running WebView SetAllowFileAccess Rule')
+    console.log('✅ Running WebView setAllowUniversalAccessFromFileURLs Rule')
 
     // get all files from directory
     const files = getJavaKotlinFiles(ManifestPlugin.androidProjectDirectory)
     for (const file of files) {
       const result = searchKeywordInFile(
         file,
-        'setAllowFileAccess(true)',
+        'setAllowUniversalAccessFromFileURLs(true)',
       )
       if (result) {
         // TODO: optimize the code: execute jar command and get method arguments
         this.issues.push({
           category: this.category,
-          name: 'WebView setAllowFileAccess',
+          name: 'WebView setAllowUniversalAccessFromFileURLs',
           severity: this.severity,
           description: this.description,
           file: getRelativePath(
