@@ -52,7 +52,7 @@
     "topicSeparator": " ",
     "topics": {
       "hello": {
-        "description": "Scan"
+        "description": "Scan test"
       }
     }
   },
